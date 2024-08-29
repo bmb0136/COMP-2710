@@ -4,7 +4,7 @@
     flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = { nixpkgs, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system: let
+  outputs = { self, nixpkgs, flake-utils, ... }: flake-utils.lib.eachDefaultSystem (system: let
     pkgs = nixpkgs.legacyPackages.${system};
     tools = [
       pkgs.gcc8 # Version used in AU Linux Lab
@@ -26,6 +26,7 @@
       export PS1="\n[\e[1;32m\[nix develop:\w]\$\e[0m "
       '';
     };
+    packages.default = self.packages.${system}.project1;
     packages.project1 = mkCppApp {
       name = "project1";
       main = "project1_Buckley_bmb0136.cpp";
