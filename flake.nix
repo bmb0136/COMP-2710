@@ -14,7 +14,7 @@
       nativeBuildInputs = tools;
       buildPhase = "g++ -Wall ${main}";
       installPhase = ''
-      mkdir-p $out/bin
+      mkdir -p $out/bin
       cp a.out $out/bin/${name}
       chmod +x $out/bin/${name}
       '';
