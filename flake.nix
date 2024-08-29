@@ -26,7 +26,7 @@
       export PS1="\n[\e[1;32m\[nix develop:\w]\$\e[0m "
       '';
     };
-    programs.project1 = mkCppApp {
+    packages.project1 = mkCppApp {
       name = "project1";
       main = "project1_Buckley_bmb0136.cpp";
       src = ./src;
