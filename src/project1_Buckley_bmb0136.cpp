@@ -1,14 +1,23 @@
 // TODO: header
+// Help used:
+// https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
+// Build instructions:
+// See the README in https://github.com/bmb0136/COMP-2710
 
-#include <iomanip>
 #include <iostream>
+#include <iomanip>
 
 using namespace std;
 
-int main() {
-  // For printing numbers properly
-  cout << fixed << setprecision(2);
+static string formatNum(float f, string prefix) {
+  stringstream ss;
+  ss.imbue(locale(""));
+  ss << prefix;
+  ss << fixed << setprecision(2) << f;
+  return ss.str();
+}
 
+int main() {
   float loanAmount;
   while (true) {
     cout << "Loan amount: ";
@@ -39,7 +48,7 @@ int main() {
     cout << "Monthy Payments: ";
     cin >> monthlyPayments;
 
-    if (monthlyPayments < 0) {
+    if (monthlyPayments <= 0) {
       cout << "Please enter a positive monthly payment" << endl;
       continue;
     }
@@ -52,12 +61,12 @@ int main() {
     break;
   }
 
-  cout << "***********************************************************" << endl;
+  cout << "************************************************************" << endl;
   cout << "        Amortization Table" << endl;
-  cout << "***********************************************************" << endl;
-  cout << "Month   Balance   Payment      Rate    Interest   Principal" << endl;
+  cout << "************************************************************" << endl;
+  cout << "Month   Balance    Payment      Rate    Interest   Principal" << endl;
   cout << left << setw(8) << 0;
-  cout << left << "$" << setw(9) << loanAmount;
+  cout << left << setw(11) << formatNum(loanAmount, "$");
   cout << left << setw(13) << "N/A";
   cout << left << setw(8) << "N/A";
   cout << left << setw(11) << "N/A";
@@ -79,15 +88,15 @@ int main() {
     numMonths++;
 
     cout << left << setw(8) << numMonths;
-    cout << left << "$" << setw(9) << loanAmount;
-    cout << left << "$" << setw(12) << payment;
-    cout << left << setw(8) << interestRate;
-    cout << left << "$" << setw(10) << interest;
-    cout << left << "$" << principal;
+    cout << left << setw(11) << formatNum(loanAmount, "$");
+    cout << left << setw(13) << formatNum(payment, "$");
+    cout << left << setw(8) << formatNum(interestRate, "");
+    cout << left << setw(11) << formatNum(interest, "$");
+    cout << left << formatNum(principal, "$");
     cout << endl;
   }
 
-  cout << "***********************************************************" << endl;
+  cout << "************************************************************" << endl;
   cout << endl;
 
   cout << "It will take " << numMonths << " months to pay off your loan" << endl;
