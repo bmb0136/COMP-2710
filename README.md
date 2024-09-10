@@ -18,3 +18,5 @@ nix run github:bmb0136/COMP-2710#project<number>
 ```
 g++ -Wall path/to/file.cpp
 ```
+
+> If this does not work, see `flake.nix` for updated build instructions
