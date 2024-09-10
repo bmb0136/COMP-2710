@@ -1,8 +1,8 @@
 // TODO: header
+// Build instructions:see the README in https://github.com/bmb0136/COMP-2710
 // Help used:
-// https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
-// Build instructions:
-// See the README in https://github.com/bmb0136/COMP-2710
+// Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
+// Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
 
 #include <iostream>
 #include <iomanip>
