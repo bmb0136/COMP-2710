@@ -9,13 +9,7 @@
 
 using namespace std;
 
-static string formatNum(float f, string prefix) {
-  stringstream ss;
-  ss.imbue(locale(""));
-  ss << prefix;
-  ss << fixed << setprecision(2) << f;
-  return ss.str();
-}
+static string formatNum(float f, string prefix);
 
 int main() {
   float loanAmount;
@@ -103,4 +97,12 @@ int main() {
   cout << "Total interest payed is: $" << interestPayed << endl;
 
   return 0;
+}
+
+static string formatNum(float f, string prefix) {
+  stringstream ss;
+  ss.imbue(locale(""));
+  ss << prefix;
+  ss << fixed << setprecision(2) << f;
+  return ss.str();
 }
