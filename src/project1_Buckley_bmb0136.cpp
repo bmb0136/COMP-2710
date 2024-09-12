@@ -6,11 +6,13 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
 
 using namespace std;
 
 static string formatNum(float f, string prefix);
 static void getUserInput(float* loanAmount, float* interestRate, float* monthlyPayments);
+static string getAsteriskString(int length);
 
 int main() {
   float loanAmount, interestRate, monthlyPayments;
@@ -27,14 +29,14 @@ int main() {
   // Interest never increases (since balance never increases)
   int interestWidth = max((int)formatNum(loanAmount * interestRate, "$").length(), 8) + 2;
   // Principal never decreases (it will be at most equal to the monthly payments)
-  int principalWidth = max((int)formatNum(monthlyPayments, "$").length(), 9) + 2;
+  int principalWidth = max((int)formatNum(monthlyPayments, "$").length(), 9);
 
   int totalWidth = monthWidth + balanceWidth + paymentWidth + rateWidth + interestWidth + principalWidth;
-
   
-  cout << "************************************************************" << endl;
+  string line = getAsteriskString(totalWidth);
+  cout << line << endl;
   cout << right << setw((totalWidth + 18) / 2) << "Amortization Table" << endl;
-  cout << "************************************************************" << endl;
+  cout << line << endl;
   cout << left << setw(monthWidth) << "Month";
   cout << left << setw(balanceWidth) << "Balance";
   cout << left << setw(paymentWidth) << "Payment";
@@ -74,13 +76,21 @@ int main() {
     cout << endl;
   }
 
-  cout << "************************************************************" << endl;
+  cout << line << endl;
   cout << endl;
 
   cout << "It will take " << numMonths << " months to pay off your loan" << endl;
   cout << "Total interest payed is: $" << interestPayed << endl;
 
   return 0;
+}
+
+static string getAsteriskString(int length) {
+  stringstream ss;
+  for (int i = 0; i < length; i++) {
+    ss << "*";
+  }
+  return ss.str();
 }
 
 static string formatNum(float f, string prefix) {
