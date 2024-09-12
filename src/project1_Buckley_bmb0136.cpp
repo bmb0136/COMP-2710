@@ -4,6 +4,7 @@
 // Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
 // Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
 
+#include <cerrno>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -13,25 +14,18 @@ using namespace std;
 static string formatNum(float f, string prefix);
 static void getUserInput(float* loanAmount, float* interestRate, float* monthlyPayments);
 static string getAsteriskString(int length);
+static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
+                                  int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
+                                  int* interestWidth);
 
 int main() {
   float loanAmount, interestRate, monthlyPayments;
   getUserInput(&loanAmount, &interestRate, &monthlyPayments);
 
-  // If it takes more than 10^9 months to pay off the loan youre cooked
-  int monthWidth = 9;
-  // The balance never increases
-  int balanceWidth = max((int)formatNum(loanAmount, "$").length(), 7) + 2;
-  // The payment only decreases for the last payment
-  int paymentWidth = max((int)formatNum(monthlyPayments, "$").length(), 7) + 2;
-  // Rate does not change
-  int rateWidth = max((int)formatNum(interestRate, "").length(), 4) + 2;
-  // Interest never increases (since balance never increases)
-  int interestWidth = max((int)formatNum(loanAmount * interestRate, "$").length(), 8) + 2;
-  // Principal never decreases (it will be at most equal to the monthly payments)
-  int principalWidth = max((int)formatNum(monthlyPayments, "$").length(), 9);
-
-  int totalWidth = monthWidth + balanceWidth + paymentWidth + rateWidth + interestWidth + principalWidth;
+  int monthWidth, balanceWidth, paymentWidth, rateWidth, interestWidth;
+  int totalWidth = calculateColumnWidths(loanAmount, interestRate, monthlyPayments,
+                                         &monthWidth, &balanceWidth, &paymentWidth,
+                                         &rateWidth, &interestWidth);
   
   string line = getAsteriskString(totalWidth);
   cout << line << endl;
@@ -83,6 +77,26 @@ int main() {
   cout << "Total interest payed is: $" << interestPayed << endl;
 
   return 0;
+}
+
+
+static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
+                                  int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
+                                  int* interestWidth) {
+  // If it takes more than 10^9 months to pay off the loan youre cooked
+  *monthWidth = 9;
+  // The balance never increases
+  *balanceWidth = max((int)formatNum(loanAmount, "$").length(), 7) + 2;
+  // The payment only decreases for the last payment
+  *paymentWidth = max((int)formatNum(monthlyPayments, "$").length(), 7) + 2;
+  // Rate does not change
+  *rateWidth = max((int)formatNum(interestRate, "").length(), 4) + 2;
+  // Interest never increases (since balance never increases)
+  *interestWidth = max((int)formatNum(loanAmount * interestRate, "$").length(), 8) + 2;
+  // Principal never decreases (it will be at most equal to the monthly payments)
+  int principalWidth = max((int)formatNum(monthlyPayments, "$").length(), 9);
+
+  return *monthWidth + *balanceWidth + *paymentWidth + *rateWidth + *interestWidth + principalWidth;
 }
 
 static string getAsteriskString(int length) {
