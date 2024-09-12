@@ -9,7 +9,7 @@
 //
 // Usage instructions:
 // Enter loan amount, interest rate, and monthly payment.
-// If the input is invalid the program will ask again.
+// If the input is invalid the program will ask again until the input is valid
 
 #include <iostream>
 #include <iomanip>
@@ -32,10 +32,13 @@ int main() {
                                          &monthWidth, &balanceWidth, &paymentWidth,
                                          &rateWidth, &interestWidth);
   
+  // Print table title
   string line = getAsteriskString(totalWidth);
   cout << line << endl;
   cout << right << setw((totalWidth + 18) / 2) << "Amortization Table" << endl;
   cout << line << endl;
+
+  // Print header names
   cout << left << setw(monthWidth) << "Month";
   cout << left << setw(balanceWidth) << "Balance";
   cout << left << setw(paymentWidth) << "Payment";
@@ -44,6 +47,7 @@ int main() {
   cout << left << "Principal";
   cout << endl;
 
+  // Print first row
   cout << left << setw(monthWidth) << 0;
   cout << left << setw(balanceWidth) << formatNum(loanAmount, "$");
   cout << left << setw(paymentWidth) << "N/A";
@@ -64,6 +68,8 @@ int main() {
     float principal = payment - interest;
     loanAmount -= principal;
 
+    // Increment before so that the output is correct.
+    // This is because we already printed the first row.
     numMonths++;
 
     cout << left << setw(monthWidth) << numMonths;
@@ -75,9 +81,11 @@ int main() {
     cout << endl;
   }
 
+  // Print end line
   cout << line << endl;
   cout << endl;
 
+  // Final output
   cout << "It will take " << numMonths << " months to pay off your loan" << endl;
   cout << "Total interest payed is: $" << interestPayed << endl;
 
