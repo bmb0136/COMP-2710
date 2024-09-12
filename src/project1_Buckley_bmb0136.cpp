@@ -16,19 +16,23 @@
 
 using namespace std;
 
+struct UserInput {
+public:
+  float loanAmount, interestRate, monthlyPayments;
+};
+
 static string formatNum(float f, string prefix);
-static void getUserInput(float* loanAmount, float* interestRate, float* monthlyPayments);
+static UserInput getUserInput();
 static string getAsteriskString(int length);
 static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
                                  int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
                                  int* interestWidth);
 
 int main() {
-  float loanAmount, interestRate, monthlyPayments;
-  getUserInput(&loanAmount, &interestRate, &monthlyPayments);
+  UserInput inputs = getUserInput();
 
   int monthWidth, balanceWidth, paymentWidth, rateWidth, interestWidth;
-  int totalWidth = calculateColumnWidths(loanAmount, interestRate, monthlyPayments,
+  int totalWidth = calculateColumnWidths(inputs.loanAmount, inputs.interestRate, inputs.monthlyPayments,
                                          &monthWidth, &balanceWidth, &paymentWidth,
                                          &rateWidth, &interestWidth);
 
@@ -47,9 +51,11 @@ int main() {
   cout << left << "Principal";
   cout << endl;
 
+  float balance = inputs.loanAmount;
+
   // Print first row
   cout << left << setw(monthWidth) << 0;
-  cout << left << setw(balanceWidth) << formatNum(loanAmount, "$");
+  cout << left << setw(balanceWidth) << formatNum(balance, "$");
   cout << left << setw(paymentWidth) << "N/A";
   cout << left << setw(rateWidth) << "N/A";
   cout << left << setw(interestWidth) << "N/A";
@@ -58,24 +64,24 @@ int main() {
 
   int numMonths = 0;
   float interestPayed = 0;
-  while (loanAmount > 0) {
-    float interest = loanAmount * interestRate / 100.0f;
+  while (balance > 0) {
+    float interest = balance * inputs.interestRate / 100.0f;
     interestPayed += interest;
 
     // Accounts for last payment
-    float payment = min(monthlyPayments, loanAmount + interest);
+    float payment = min(inputs.monthlyPayments, balance + interest);
 
     float principal = payment - interest;
-    loanAmount -= principal;
+    balance -= principal;
 
     // Increment before so that the output is correct.
     // This is because we already printed the first row.
     numMonths++;
 
     cout << left << setw(monthWidth) << numMonths;
-    cout << left << setw(balanceWidth) << formatNum(loanAmount, "$");
+    cout << left << setw(balanceWidth) << formatNum(balance, "$");
     cout << left << setw(paymentWidth) << formatNum(payment, "$");
-    cout << left << setw(rateWidth) << formatNum(interestRate, "");
+    cout << left << setw(rateWidth) << formatNum(inputs.interestRate, "");
     cout << left << setw(interestWidth) << formatNum(interest, "$");
     cout << left << formatNum(principal, "$");
     cout << endl;
@@ -128,12 +134,14 @@ static string formatNum(float f, string prefix) {
   return ss.str();
 }
 
-static void getUserInput(float* loanAmount, float* interestRate, float* monthlyPayments) {
+static UserInput getUserInput() {
+  UserInput inputs;
+
   while (true) {
     cout << "Loan amount: ";
-    cin >> *loanAmount;
+    cin >> inputs.loanAmount;
 
-    if (*loanAmount <= 0) {
+    if (inputs.loanAmount <= 0) {
       cout << "Please enter a positive loan amount" << endl;
       continue;
     }
@@ -142,10 +150,10 @@ static void getUserInput(float* loanAmount, float* interestRate, float* monthlyP
 
   while (true) {
     cout << "Interest Rate (% per year): ";
-    cin >> *interestRate;
-    *interestRate /= 12.0f; // Convert to % per month
+    cin >> inputs.interestRate;
+    inputs.interestRate /= 12.0f; // Convert to % per month
 
-    if (*interestRate <= 0) {
+    if (inputs.interestRate <= 0) {
       cout << "Please enter a positive interest rate" << endl;
       continue;
     }
@@ -154,18 +162,20 @@ static void getUserInput(float* loanAmount, float* interestRate, float* monthlyP
 
   while (true) {
     cout << "Monthy Payments: ";
-    cin >> *monthlyPayments;
+    cin >> inputs.monthlyPayments;
 
-    if (*monthlyPayments <= 0) {
+    if (inputs.monthlyPayments <= 0) {
       cout << "Please enter a positive monthly payment" << endl;
       continue;
     }
 
-    float interest = *loanAmount * *interestRate / 100.0f;
-    if ((*monthlyPayments - interest) <= 0) {
+    float interest = inputs.loanAmount * inputs.interestRate / 100.0f;
+    if ((inputs.monthlyPayments - interest) <= 0) {
       cout << "Please enter a highly monthy payment" << endl;
       continue;
     }
     break;
   }
+  
+  return inputs;
 }
