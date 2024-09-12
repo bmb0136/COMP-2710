@@ -1,13 +1,18 @@
-// TODO: header
-// Build instructions:see the README in https://github.com/bmb0136/COMP-2710
+// project1_Buckley_bmb0136.cpp -
+// Author: Brandon Buckley (bmb0136)
+//
+// Build instructions: see the README in https://github.com/bmb0136/COMP-2710
+//
 // Help used:
 // Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
 // Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
+//
+// Usage instructions:
+// Enter loan amount, interest rate, and monthly payment.
+// If the input is invalid the program will ask again.
 
-#include <cerrno>
 #include <iostream>
 #include <iomanip>
-#include <sstream>
 
 using namespace std;
 
