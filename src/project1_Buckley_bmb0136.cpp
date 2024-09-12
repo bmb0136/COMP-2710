@@ -1,4 +1,4 @@
-// project1_Buckley_bmb0136.cpp -
+// project1_Buckley_bmb0136.cpp
 // Author: Brandon Buckley (bmb0136)
 //
 // Build instructions: see the README in https://github.com/bmb0136/COMP-2710
@@ -9,7 +9,7 @@
 //
 // Usage instructions:
 // Enter loan amount, interest rate, and monthly payment.
-// If the input is invalid the program will ask again until the input is valid
+// If the input is invalid the program will ask again until the input is valid.
 
 #include <iostream>
 #include <iomanip>
@@ -20,8 +20,8 @@ static string formatNum(float f, string prefix);
 static void getUserInput(float* loanAmount, float* interestRate, float* monthlyPayments);
 static string getAsteriskString(int length);
 static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
-                                  int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
-                                  int* interestWidth);
+                                 int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
+                                 int* interestWidth);
 
 int main() {
   float loanAmount, interestRate, monthlyPayments;
@@ -31,7 +31,7 @@ int main() {
   int totalWidth = calculateColumnWidths(loanAmount, interestRate, monthlyPayments,
                                          &monthWidth, &balanceWidth, &paymentWidth,
                                          &rateWidth, &interestWidth);
-  
+
   // Print table title
   string line = getAsteriskString(totalWidth);
   cout << line << endl;
@@ -94,8 +94,8 @@ int main() {
 
 
 static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
-                                  int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
-                                  int* interestWidth) {
+                                 int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
+                                 int* interestWidth) {
   // If it takes more than 10^9 months to pay off the loan youre cooked
   *monthWidth = 9;
   // The balance never increases
