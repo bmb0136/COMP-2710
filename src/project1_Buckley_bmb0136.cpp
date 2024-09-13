@@ -7,6 +7,7 @@
 // Help used:
 // (1) Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
 // (2) Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
+// (3) std::cin with invalid inputs: https://www.learncpp.com/cpp-tutorial/stdcin-and-handling-invalid-input/
 //
 // Usage instructions:
 // Enter loan amount, interest rate, and monthly payment.
@@ -90,7 +91,7 @@ int main() {
 
   // Final output
   cout << "It will take " << numMonths << " months to pay off your loan" << endl;
-  cout << "Total interest payed is: $" << interestPayed << endl;
+  cout << "Total interest payed is: " << formatNum(interestPayed, "$") << endl;
 
   return 0;
 }
@@ -160,6 +161,9 @@ static UserInput getUserInput() {
   while (true) {
     cout << "Loan amount: ";
     cin >> inputs.loanAmount;
+    // These two lines are based on Source (3)
+    cin.clear();
+    cin.ignore(999999, '\n');
 
     if (inputs.loanAmount <= 0) {
       cout << "\x1b[31mPlease enter a positive loan amount\x1b[0m" << endl;
@@ -171,6 +175,10 @@ static UserInput getUserInput() {
   while (true) {
     cout << "Interest Rate (% per year): ";
     cin >> inputs.interestRate;
+    // These two lines are based on Source (3)
+    cin.clear();
+    cin.ignore(999999, '\n');
+
     inputs.interestRate /= 12.0f; // Convert to % per month
 
     if (inputs.interestRate <= 0) {
@@ -183,6 +191,9 @@ static UserInput getUserInput() {
   while (true) {
     cout << "Monthy Payments: ";
     cin >> inputs.monthlyPayments;
+    // These two lines are based on Source (3)
+    cin.clear();
+    cin.ignore(999999, '\n');
 
     if (inputs.monthlyPayments <= 0) {
       cout << "\x1b[31mPlease enter a positive monthly payment\x1b[0m" << endl;
