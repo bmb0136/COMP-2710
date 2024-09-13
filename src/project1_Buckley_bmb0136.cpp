@@ -43,6 +43,7 @@ static void printTableRow(ColumnSizes sizes, string month, string balance, strin
 
 int main() {
   UserInput inputs = getUserInput();
+  cout << endl; // Add extra line
 
   ColumnSizes sizes = calculateColumnWidths(inputs);
 
@@ -161,7 +162,7 @@ static UserInput getUserInput() {
     cin >> inputs.loanAmount;
 
     if (inputs.loanAmount <= 0) {
-      cout << "Please enter a positive loan amount" << endl;
+      cout << "\x1b[31mPlease enter a positive loan amount\x1b[0m" << endl;
       continue;
     }
     break;
@@ -173,7 +174,7 @@ static UserInput getUserInput() {
     inputs.interestRate /= 12.0f; // Convert to % per month
 
     if (inputs.interestRate <= 0) {
-      cout << "Please enter a positive interest rate" << endl;
+      cout << "\x1b[31mPlease enter a positive interest rate\x1b[0m" << endl;
       continue;
     }
     break;
@@ -184,14 +185,14 @@ static UserInput getUserInput() {
     cin >> inputs.monthlyPayments;
 
     if (inputs.monthlyPayments <= 0) {
-      cout << "Please enter a positive monthly payment" << endl;
+      cout << "\x1b[31mPlease enter a positive monthly payment\x1b[0m" << endl;
       continue;
     }
 
     float interest = inputs.loanAmount * inputs.interestRate / 100.0f;
     float principal = inputs.monthlyPayments - interest;
     if (principal <= 0) {
-      cout << "Please enter a highly monthy payment" << endl;
+      cout << "\x1b[31mPlease enter a higher monthy payment\x1b[0m" << endl;
       continue;
     }
     break;
