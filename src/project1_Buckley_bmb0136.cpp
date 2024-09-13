@@ -12,12 +12,8 @@
 // Enter loan amount, interest rate, and monthly payment.
 // If the input is invalid the program will ask again until the input is valid.
 
-#include <algorithm>
-#include <cmath>
 #include <iostream>
 #include <iomanip>
-#include <sstream>
-#include <string>
 
 using namespace std;
 
