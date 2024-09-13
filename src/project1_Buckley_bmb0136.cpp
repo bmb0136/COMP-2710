@@ -12,6 +12,8 @@
 // Enter loan amount, interest rate, and monthly payment.
 // If the input is invalid the program will ask again until the input is valid.
 
+#include <algorithm>
+#include <cmath>
 #include <iostream>
 #include <iomanip>
 #include <sstream>
@@ -108,8 +110,19 @@ static void printTableRow(ColumnSizes sizes, string month, string balance, strin
 
 static ColumnSizes calculateColumnWidths(UserInput inputs) {
   ColumnSizes sizes;
-  // If it takes more than 10^9 months to pay off the loan youre cooked
-  sizes.month = 9;
+
+  // Calculate number of months it will take
+  // The only other way to do this would be solving a recurrence relation, then solving that for 0
+  // IDK how to do the former half of that.
+  // I could just ask WolframAlpha, but this is way easier.
+  int maxMonths = 0;
+  float tempBalance = inputs.loanAmount;
+  while (tempBalance > 0) {
+    tempBalance -= inputs.monthlyPayments - (tempBalance * inputs.interestRate / 100.0);
+    maxMonths++;
+  }
+
+  sizes.month = max((int)formatNum(maxMonths, "").length(), 5) + 2;
   // The balance never increases
   sizes.balance = max((int)formatNum(inputs.loanAmount, "$").length(), 7) + 2;
   // The payment only decreases for the last payment
