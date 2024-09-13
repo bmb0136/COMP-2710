@@ -117,7 +117,7 @@ static ColumnSizes calculateColumnWidths(UserInput inputs) {
   // Rate does not change
   sizes.rate = max((int)formatNum(inputs.interestRate, "").length(), 4) + 2;
   // Interest never increases (since balance never increases)
-  sizes.interest = max((int)formatNum(inputs.loanAmount * inputs.interestRate, "$").length(), 8) + 2;
+  sizes.interest = max((int)formatNum(inputs.loanAmount * inputs.interestRate / 100.0, "$").length(), 8) + 2;
   // Principal never decreases (it will be at most equal to the monthly payments)
   sizes.principal = max((int)formatNum(inputs.monthlyPayments, "$").length(), 9);
 
