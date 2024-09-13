@@ -1,7 +1,8 @@
 // project1_Buckley_bmb0136.cpp
 // Author: Brandon Buckley (bmb0136)
 //
-// Build instructions: see the README in https://github.com/bmb0136/COMP-2710
+// Build instructions:
+// See the README in https://github.com/bmb0136/COMP-2710
 //
 // Help used:
 // Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
