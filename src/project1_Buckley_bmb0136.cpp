@@ -5,8 +5,8 @@
 // See the README in https://github.com/bmb0136/COMP-2710
 //
 // Help used:
-// Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
-// Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
+// (1) Adding commas to numbers: https://stackoverflow.com/questions/7276826/format-number-with-commas-in-c 
+// (2) Padding strings: https://stackoverflow.com/questions/667183/padding-stl-strings-in-c
 //
 // Usage instructions:
 // Enter loan amount, interest rate, and monthly payment.
@@ -48,6 +48,7 @@ int main() {
   // Print table title
   cout << line << endl;
   // 18 = # of chars in "Amortization table"
+  // right and setw from Source (2)
   cout << right << setw((sizes.totalWidth() + 18) / 2) << "Amortization Table" << endl;
   cout << line << endl;
 
@@ -96,6 +97,7 @@ int main() {
 
 static void printTableRow(ColumnSizes sizes, string month, string balance, string payment,
                           string rate, string interest, string principal) {
+  // left and setw from Source (2)
   cout << left << setw(sizes.month) << month;
   cout << left << setw(sizes.balance) << balance;
   cout << left << setw(sizes.payment) << payment;
@@ -135,6 +137,7 @@ static ColumnSizes calculateColumnWidths(UserInput inputs) {
 }
 
 static string getAsteriskString(int length) {
+  // The use of stringstream here was inspired by Source (1)
   stringstream ss;
   for (int i = 0; i < length; i++) {
     ss << "*";
@@ -142,6 +145,7 @@ static string getAsteriskString(int length) {
   return ss.str();
 }
 
+// Modified from Source (1)
 static string formatNum(float f, string prefix) {
   stringstream ss;
   ss.imbue(locale(""));
