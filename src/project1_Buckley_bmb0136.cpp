@@ -13,6 +13,8 @@
 
 #include <iostream>
 #include <iomanip>
+#include <sstream>
+#include <string>
 
 using namespace std;
 
@@ -41,9 +43,11 @@ int main() {
 
   ColumnSizes sizes = calculateColumnWidths(inputs);
 
-  // Print table title
   string line = getAsteriskString(sizes.totalWidth());
+
+  // Print table title
   cout << line << endl;
+  // 18 = # of chars in "Amortization table"
   cout << right << setw((sizes.totalWidth() + 18) / 2) << "Amortization Table" << endl;
   cout << line << endl;
 
@@ -53,13 +57,7 @@ int main() {
   float balance = inputs.loanAmount;
 
   // Print first row
-  cout << left << setw(sizes.month) << 0;
-  cout << left << setw(sizes.balance) << formatNum(balance, "$");
-  cout << left << setw(sizes.payment) << "N/A";
-  cout << left << setw(sizes.rate) << "N/A";
-  cout << left << setw(sizes.interest) << "N/A";
-  cout << left << "N/A";
-  cout << endl;
+  printTableRow(sizes, "0", formatNum(balance, "$"), "N/A", "N/A", "N/A", "N/A");
 
   int numMonths = 0;
   float interestPayed = 0;
@@ -77,13 +75,9 @@ int main() {
     // This is because we already printed the first row.
     numMonths++;
 
-    cout << left << setw(sizes.month) << numMonths;
-    cout << left << setw(sizes.balance) << formatNum(balance, "$");
-    cout << left << setw(sizes.payment) << formatNum(payment, "$");
-    cout << left << setw(sizes.rate) << formatNum(inputs.interestRate, "");
-    cout << left << setw(sizes.interest) << formatNum(interest, "$");
-    cout << left << formatNum(principal, "$");
-    cout << endl;
+    printTableRow(sizes, to_string(numMonths), formatNum(balance, "$"),
+                  formatNum(payment, "$"), formatNum(inputs.interestRate, "$"),
+                  formatNum(interest, "$"), formatNum(principal, "$"));
   }
 
   // Print end line
