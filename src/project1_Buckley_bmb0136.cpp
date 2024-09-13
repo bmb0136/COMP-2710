@@ -21,44 +21,43 @@ public:
   float loanAmount, interestRate, monthlyPayments;
 };
 
+struct ColumnSizes {
+public:
+  int month, balance, payment, rate, interest, principal;
+  int totalWidth() {
+    return month + balance + payment + rate + interest + principal;
+  }
+};
+
 static string formatNum(float f, string prefix);
 static UserInput getUserInput();
 static string getAsteriskString(int length);
-static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
-                                 int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
-                                 int* interestWidth);
+static ColumnSizes calculateColumnWidths(UserInput inputs);
+static void printTableRow(ColumnSizes sizes, string month, string balance, string payment,
+                          string rate, string interest, string principal);
 
 int main() {
   UserInput inputs = getUserInput();
 
-  int monthWidth, balanceWidth, paymentWidth, rateWidth, interestWidth;
-  int totalWidth = calculateColumnWidths(inputs.loanAmount, inputs.interestRate, inputs.monthlyPayments,
-                                         &monthWidth, &balanceWidth, &paymentWidth,
-                                         &rateWidth, &interestWidth);
+  ColumnSizes sizes = calculateColumnWidths(inputs);
 
   // Print table title
-  string line = getAsteriskString(totalWidth);
+  string line = getAsteriskString(sizes.totalWidth());
   cout << line << endl;
-  cout << right << setw((totalWidth + 18) / 2) << "Amortization Table" << endl;
+  cout << right << setw((sizes.totalWidth() + 18) / 2) << "Amortization Table" << endl;
   cout << line << endl;
 
   // Print header names
-  cout << left << setw(monthWidth) << "Month";
-  cout << left << setw(balanceWidth) << "Balance";
-  cout << left << setw(paymentWidth) << "Payment";
-  cout << left << setw(rateWidth) << "Rate";
-  cout << left << setw(interestWidth) << "Interest";
-  cout << left << "Principal";
-  cout << endl;
+  printTableRow(sizes, "Month", "Balance", "Payment", "Rate", "Interest", "Principal");
 
   float balance = inputs.loanAmount;
 
   // Print first row
-  cout << left << setw(monthWidth) << 0;
-  cout << left << setw(balanceWidth) << formatNum(balance, "$");
-  cout << left << setw(paymentWidth) << "N/A";
-  cout << left << setw(rateWidth) << "N/A";
-  cout << left << setw(interestWidth) << "N/A";
+  cout << left << setw(sizes.month) << 0;
+  cout << left << setw(sizes.balance) << formatNum(balance, "$");
+  cout << left << setw(sizes.payment) << "N/A";
+  cout << left << setw(sizes.rate) << "N/A";
+  cout << left << setw(sizes.interest) << "N/A";
   cout << left << "N/A";
   cout << endl;
 
@@ -78,11 +77,11 @@ int main() {
     // This is because we already printed the first row.
     numMonths++;
 
-    cout << left << setw(monthWidth) << numMonths;
-    cout << left << setw(balanceWidth) << formatNum(balance, "$");
-    cout << left << setw(paymentWidth) << formatNum(payment, "$");
-    cout << left << setw(rateWidth) << formatNum(inputs.interestRate, "");
-    cout << left << setw(interestWidth) << formatNum(interest, "$");
+    cout << left << setw(sizes.month) << numMonths;
+    cout << left << setw(sizes.balance) << formatNum(balance, "$");
+    cout << left << setw(sizes.payment) << formatNum(payment, "$");
+    cout << left << setw(sizes.rate) << formatNum(inputs.interestRate, "");
+    cout << left << setw(sizes.interest) << formatNum(interest, "$");
     cout << left << formatNum(principal, "$");
     cout << endl;
   }
@@ -98,24 +97,33 @@ int main() {
   return 0;
 }
 
+static void printTableRow(ColumnSizes sizes, string month, string balance, string payment,
+                          string rate, string interest, string principal) {
+  cout << left << setw(sizes.month) << month;
+  cout << left << setw(sizes.balance) << balance;
+  cout << left << setw(sizes.payment) << payment;
+  cout << left << setw(sizes.rate) << rate;
+  cout << left << setw(sizes.interest) << interest;
+  cout << left << setw(sizes.principal) << principal;
+  cout << endl;
+}
 
-static int calculateColumnWidths(float loanAmount, float interestRate, float monthlyPayments,
-                                 int* monthWidth, int* balanceWidth, int* paymentWidth, int* rateWidth,
-                                 int* interestWidth) {
+static ColumnSizes calculateColumnWidths(UserInput inputs) {
+  ColumnSizes sizes;
   // If it takes more than 10^9 months to pay off the loan youre cooked
-  *monthWidth = 9;
+  sizes.month = 9;
   // The balance never increases
-  *balanceWidth = max((int)formatNum(loanAmount, "$").length(), 7) + 2;
+  sizes.balance = max((int)formatNum(inputs.loanAmount, "$").length(), 7) + 2;
   // The payment only decreases for the last payment
-  *paymentWidth = max((int)formatNum(monthlyPayments, "$").length(), 7) + 2;
+  sizes.payment = max((int)formatNum(inputs.monthlyPayments, "$").length(), 7) + 2;
   // Rate does not change
-  *rateWidth = max((int)formatNum(interestRate, "").length(), 4) + 2;
+  sizes.rate = max((int)formatNum(inputs.interestRate, "").length(), 4) + 2;
   // Interest never increases (since balance never increases)
-  *interestWidth = max((int)formatNum(loanAmount * interestRate, "$").length(), 8) + 2;
+  sizes.interest = max((int)formatNum(inputs.loanAmount * inputs.interestRate, "$").length(), 8) + 2;
   // Principal never decreases (it will be at most equal to the monthly payments)
-  int principalWidth = max((int)formatNum(monthlyPayments, "$").length(), 9);
+  sizes.principal = max((int)formatNum(inputs.monthlyPayments, "$").length(), 9);
 
-  return *monthWidth + *balanceWidth + *paymentWidth + *rateWidth + *interestWidth + principalWidth;
+  return sizes;
 }
 
 static string getAsteriskString(int length) {
