@@ -54,14 +54,17 @@ int main() {
   // Print header names
   printTableRow(sizes, "Month", "Balance", "Payment", "Rate", "Interest", "Principal");
 
+  // Make a copy instead of modifying the field in inputs directly
   float balance = inputs.loanAmount;
 
-  // Print first row
+  // Print hardcoded first row
   printTableRow(sizes, "0", formatNum(balance, "$"), "N/A", "N/A", "N/A", "N/A");
 
+  // Print the rest of thr rows
   int numMonths = 0;
   float interestPayed = 0;
   while (balance > 0) {
+    // Interest rate is in %, convert to 0-1 range
     float interest = balance * inputs.interestRate / 100.0f;
     interestPayed += interest;
 
@@ -172,12 +175,13 @@ static UserInput getUserInput() {
     }
 
     float interest = inputs.loanAmount * inputs.interestRate / 100.0f;
-    if ((inputs.monthlyPayments - interest) <= 0) {
+    float principal = inputs.monthlyPayments - interest;
+    if (principal <= 0) {
       cout << "Please enter a highly monthy payment" << endl;
       continue;
     }
     break;
   }
-  
+
   return inputs;
 }
