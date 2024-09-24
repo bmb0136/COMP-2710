@@ -20,7 +20,7 @@ bool randomChance(int percent);
 const int NUM_RUNS = 10000;
 const int AARON_CHANCE = 100 / 3;
 const int BOB_CHANCE = 100 / 2;
-const int CHARLIE_CHANCE = 100;
+// Don't need one for Charlie since he never misses
 
 int main() {
   // Init random
@@ -47,11 +47,18 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
   return a + b + c >= 2;
 }
 
-// Shoot at the deadliest person
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
   if (C_alive) {
     C_alive = !randomChance(AARON_CHANCE);
   } else if (B_alive) {
     B_alive = !randomChance(AARON_CHANCE);
+  }
+}
+
+void Bob_shoots(bool& A_alive, bool& C_alive) {
+  if (C_alive) {
+    C_alive = !randomChance(BOB_CHANCE);
+  } else if (A_alive) {
+    A_alive = !randomChance(BOB_CHANCE);
   }
 }
