@@ -26,10 +26,15 @@
       export PS1="\n[\e[1;32m\[nix develop:\w]\$\e[0m "
       '';
     };
-    packages.default = self.packages.${system}.project1;
+    packages.default = self.packages.${system}.project2;
     packages.project1 = mkCppApp {
       name = "project1";
       main = "project1_Buckley_bmb0136.cpp";
+      src = ./src;
+    };
+    packages.project2 = mkCppApp {
+      name = "project2";
+      main = "project2_Buckley_bmb0136.cpp";
       src = ./src;
     };
   });
