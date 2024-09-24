@@ -62,3 +62,11 @@ void Bob_shoots(bool& A_alive, bool& C_alive) {
     A_alive = !randomChance(BOB_CHANCE);
   }
 }
+
+void Charlie_shoots(bool& A_alive, bool& B_alive) {
+  if (B_alive) {
+    B_alive = false; // He never misses, so just kill them
+  } else if (A_alive) {
+    A_alive = false;
+  }
+}
