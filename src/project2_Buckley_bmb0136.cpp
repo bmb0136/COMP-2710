@@ -70,3 +70,20 @@ void Charlie_shoots(bool& A_alive, bool& B_alive) {
     A_alive = false;
   }
 }
+
+void Aaron_shoots2(bool& B_alive, bool& C_alive) {
+  // We do not know if we are on the first turn,
+  // but if Bob and Charlie are alive then we can assume its the first turn.
+  // This is true because after 1 round either Bob or Charlie will be dead,
+  // since Bob will try to shoot Charlie and vice versa. And Charlie does not miss,
+  // so if either Bob will die or Charlie will die by the end of round 1.
+  if (B_alive && C_alive) {
+    return;
+  }
+
+  if (C_alive) {
+    C_alive = !randomChance(AARON_CHANCE);
+  } else if (B_alive) {
+    B_alive = !randomChance(AARON_CHANCE);
+  }
+}
