@@ -1,10 +1,8 @@
 // TODO: header
 
-#include <cstring>
 #include <iostream>
 #include <stdlib.h>
 #include <ctime>
-#include <string_view>
 
 using namespace std;
 
@@ -32,9 +30,13 @@ public:
     bobWins += other.bobWins;
     charlieWins += other.charlieWins;
   }
+  bool isBetterForAaron(StrategyResult other) {
+    return aaronWins > other.aaronWins;
+  }
 };
 typedef void(*shootFunc)(bool&, bool&);
 StrategyResult simulateTruel(shootFunc aaronStrategy);
+void printResult(StrategyResult result);
 
 int main() {
   // Init random
@@ -46,22 +48,25 @@ int main() {
   waitForKey();
 
   StrategyResult strategy1;
-  memset(&strategy1, 0, sizeof(StrategyResult));
+  strategy1.aaronWins = strategy1.bobWins = strategy1.charlieWins = 0;
 
   for (int i = 0; i < NUM_RUNS; i++) {
     strategy1.combine(simulateTruel(&Aaron_shoots1));
   }
 
+  printResult(strategy1);
+  cout << endl;
 
   cout << "Ready to run strategy 2 (run " << NUM_RUNS << " times)" << endl;
   waitForKey();
   StrategyResult strategy2;
-  memset(&strategy2, 0, sizeof(StrategyResult));
+  strategy2.aaronWins = strategy2.bobWins = strategy2.charlieWins = 0;
 
   for (int i = 0; i < NUM_RUNS; i++) {
     strategy2.combine(simulateTruel(&Aaron_shoots2));
   }
 
+  printResult(strategy2);
 
   return 0;
 }
@@ -125,7 +130,7 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
 
 StrategyResult simulateTruel(shootFunc aaronStrategy) {
   StrategyResult result;
-  memset(&result, 0, sizeof(StrategyResult));
+  result.aaronWins = result.bobWins = result.charlieWins = 0;
 
   bool a = true, b = true, c = true;
   int i = 0;
@@ -155,4 +160,14 @@ StrategyResult simulateTruel(shootFunc aaronStrategy) {
   }
   
   return result;
+}
+
+void printResult(StrategyResult result) {
+  float aaronPercent = (float)result.aaronWins / NUM_RUNS * 100.0f;
+  float bobPercent = (float)result.bobWins / NUM_RUNS * 100.0f;
+  float charliePercent = (float)result.charlieWins / NUM_RUNS * 100.0f;
+
+  cout << "Aaron won " << result.aaronWins << "/" << NUM_RUNS << " truels or " << aaronPercent << "%" << endl; 
+  cout << "Bob won " << result.bobWins << "/" << NUM_RUNS << " truels or " << bobPercent << "%" << endl; 
+  cout << "Charlie won " << result.charlieWins << "/" << NUM_RUNS << " truels or " << charliePercent << "%" << endl; 
 }
