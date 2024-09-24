@@ -1,8 +1,10 @@
 // TODO: header
 
+#include <cstring>
 #include <iostream>
 #include <stdlib.h>
 #include <ctime>
+#include <string_view>
 
 using namespace std;
 
@@ -17,6 +19,19 @@ void Charlie_shoots(bool& A_alive, bool& B_alive);
 void waitForKey();
 bool randomChance(int percent);
 
+struct StrategyResult {
+public:
+  int aaronWins, bobWins, charlieWins;
+  void combine(StrategyResult other) {
+    aaronWins += other.aaronWins;
+    bobWins += other.bobWins;
+    charlieWins += other.charlieWins;
+  }
+};
+typedef void(*shootFunc)(bool&, bool&);
+StrategyResult simulateTruel(shootFunc aaronStrategy);
+
+
 const int NUM_RUNS = 10000;
 const int AARON_CHANCE = 100 / 3;
 const int BOB_CHANCE = 100 / 2;
@@ -27,6 +42,27 @@ int main() {
   srand(time(0));
 
   cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
+
+  cout << "Ready to run strategy 1 (run " << NUM_RUNS << " times)" << endl;
+  waitForKey();
+
+  StrategyResult strategy1;
+  memset(&strategy1, 0, sizeof(StrategyResult));
+
+  for (int i = 0; i < NUM_RUNS; i++) {
+    strategy1.combine(simulateTruel(&Aaron_shoots1));
+  }
+
+
+  cout << "Ready to run strategy 2 (run " << NUM_RUNS << " times)" << endl;
+  waitForKey();
+  StrategyResult strategy2;
+  memset(&strategy2, 0, sizeof(StrategyResult));
+
+  for (int i = 0; i < NUM_RUNS; i++) {
+    strategy2.combine(simulateTruel(&Aaron_shoots2));
+  }
+
 
   return 0;
 }
@@ -86,4 +122,38 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
   } else if (B_alive) {
     B_alive = !randomChance(AARON_CHANCE);
   }
+}
+
+StrategyResult simulateTruel(shootFunc aaronStrategy) {
+  StrategyResult result;
+  memset(&result, 0, sizeof(StrategyResult));
+
+  bool a = true, b = true, c = true;
+  int i = 0;
+
+  while (at_least_two_alive(a, b, c)) {
+    switch (i) {
+      case 0:
+        aaronStrategy(b, c);
+        break;
+      case 1:
+        Bob_shoots(a, c);
+        break;
+      case 2:
+        Charlie_shoots(a, b);
+        break;
+    }
+    i++;
+    i %= 3;
+  }
+
+  if (a) {
+    result.aaronWins++;
+  } else if (b) {
+    result.bobWins++;
+  } else if (c) {
+    result.charlieWins++;
+  }
+  
+  return result;
 }
