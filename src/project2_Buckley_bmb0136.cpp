@@ -8,6 +8,11 @@
 
 using namespace std;
 
+const int NUM_RUNS = 10000;
+const int AARON_CHANCE = 100 / 3;
+const int BOB_CHANCE = 100 / 2;
+// Don't need one for Charlie since he never misses
+
 // Required functions
 bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive);
 void Aaron_shoots1(bool& B_alive, bool& C_alive);
@@ -30,12 +35,6 @@ public:
 };
 typedef void(*shootFunc)(bool&, bool&);
 StrategyResult simulateTruel(shootFunc aaronStrategy);
-
-
-const int NUM_RUNS = 10000;
-const int AARON_CHANCE = 100 / 3;
-const int BOB_CHANCE = 100 / 2;
-// Don't need one for Charlie since he never misses
 
 int main() {
   // Init random
