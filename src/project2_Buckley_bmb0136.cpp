@@ -17,8 +17,10 @@ void Charlie_shoots(bool& A_alive, bool& B_alive);
 void waitForKey();
 bool randomChance(int percent);
 
-// 3 required constants
 const int NUM_RUNS = 10000;
+const int AARON_CHANCE = 100 / 3;
+const int BOB_CHANCE = 100 / 2;
+const int CHARLIE_CHANCE = 100;
 
 int main() {
   // Init random
@@ -43,4 +45,13 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
   int b = B_alive ? 1 : 0;
   int c = C_alive ? 1 : 0;
   return a + b + c >= 2;
+}
+
+// Shoot at the deadliest person
+void Aaron_shoots1(bool& B_alive, bool& C_alive) {
+  if (C_alive) {
+    C_alive = !randomChance(AARON_CHANCE);
+  } else if (B_alive) {
+    B_alive = !randomChance(AARON_CHANCE);
+  }
 }
