@@ -37,3 +37,10 @@ void waitForKey() {
 bool randomChance(int percent) {
   return (rand() % 100) < percent;
 }
+
+bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
+  int a = A_alive ? 1 : 0;
+  int b = B_alive ? 1 : 0;
+  int c = C_alive ? 1 : 0;
+  return a + b + c >= 2;
+}
