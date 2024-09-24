@@ -88,18 +88,18 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
 }
 
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
-  if (C_alive) {
-    C_alive = !randomChance(AARON_CHANCE);
-  } else if (B_alive) {
-    B_alive = !randomChance(AARON_CHANCE);
+  if (C_alive && randomChance(AARON_CHANCE)) {
+    C_alive = false;
+  } else if (B_alive && randomChance(AARON_CHANCE)) {
+    B_alive = false;
   }
 }
 
 void Bob_shoots(bool& A_alive, bool& C_alive) {
-  if (C_alive) {
-    C_alive = !randomChance(BOB_CHANCE);
-  } else if (A_alive) {
-    A_alive = !randomChance(BOB_CHANCE);
+  if (C_alive && randomChance(BOB_CHANCE)) {
+    C_alive = false;
+  } else if (A_alive && randomChance(BOB_CHANCE)) {
+    A_alive = false;
   }
 }
 
