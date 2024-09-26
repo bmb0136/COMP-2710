@@ -7,8 +7,8 @@
 using namespace std;
 
 const int NUM_RUNS = 10000;
-const int AARON_CHANCE = 33;
-const int BOB_CHANCE = 50;
+const int AARON_CHANCE = 3;
+const int BOB_CHANCE = 2;
 // Don't need one for Charlie since he never misses
 
 // Required functions
@@ -83,17 +83,17 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
 }
 
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
-  if (C_alive && (rand() % 100) < AARON_CHANCE) {
+  if (C_alive && (rand() % AARON_CHANCE) == 0) {
     C_alive = false;
-  } else if (B_alive && (rand() % 100) < AARON_CHANCE) {
+  } else if (B_alive && (rand() % AARON_CHANCE) == 0) {
     B_alive = false;
   }
 }
 
 void Bob_shoots(bool& A_alive, bool& C_alive) {
-  if (C_alive && (rand() % 100) < BOB_CHANCE) {
+  if (C_alive && (rand() % BOB_CHANCE) == 0) {
     C_alive = false;
-  } else if (A_alive && (rand() % 100) < BOB_CHANCE) {
+  } else if (A_alive && (rand() % BOB_CHANCE) == 0) {
     A_alive = false;
   }
 }
@@ -116,9 +116,9 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
     return;
   }
 
-  if (C_alive && (rand() % 100) < AARON_CHANCE) {
+  if (C_alive && (rand() % AARON_CHANCE) == 0) {
     C_alive = false;
-  } else if (B_alive && (rand() % 100) < AARON_CHANCE) {
+  } else if (B_alive && (rand() % AARON_CHANCE) == 0) {
     B_alive = false;
   }
 }
