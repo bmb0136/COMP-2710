@@ -145,13 +145,19 @@ StrategyResult simulateTruel(shootFunc aaronStrategy) {
   while (at_least_two_alive(a, b, c)) {
     switch (i) {
       case 0:
-        aaronStrategy(b, c);
+        if (a) {
+          aaronStrategy(b, c);
+        }
         break;
       case 1:
-        Bob_shoots(a, c);
+        if (b) {
+          Bob_shoots(a, c);
+        }
         break;
       case 2:
-        Charlie_shoots(a, b);
+        if (c) {
+          Charlie_shoots(a, b);
+        }
         break;
     }
     i++;
