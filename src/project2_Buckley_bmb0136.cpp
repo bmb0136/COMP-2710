@@ -83,18 +83,26 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
 }
 
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
-  if (C_alive && (rand() % AARON_CHANCE) == 0) {
-    C_alive = false;
-  } else if (B_alive && (rand() % AARON_CHANCE) == 0) {
-    B_alive = false;
+  if (C_alive) {
+    if ((rand() % AARON_CHANCE) == 0) {
+      C_alive = false;
+    }
+  } else if (B_alive) {
+    if ((rand() % AARON_CHANCE) == 0) {
+      B_alive = false;
+    }
   }
 }
 
 void Bob_shoots(bool& A_alive, bool& C_alive) {
-  if (C_alive && (rand() % BOB_CHANCE) == 0) {
-    C_alive = false;
-  } else if (A_alive && (rand() % BOB_CHANCE) == 0) {
-    A_alive = false;
+  if (C_alive) {
+    if ((rand() % BOB_CHANCE) == 0) {
+      C_alive = false;
+    }
+  } else if (A_alive) {
+    if ((rand() % BOB_CHANCE) == 0) {
+      A_alive = false;
+    }
   }
 }
 
@@ -116,10 +124,14 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
     return;
   }
 
-  if (C_alive && (rand() % AARON_CHANCE) == 0) {
-    C_alive = false;
-  } else if (B_alive && (rand() % AARON_CHANCE) == 0) {
-    B_alive = false;
+  if (C_alive) {
+    if ((rand() % AARON_CHANCE) == 0) {
+      C_alive = false;
+    }
+  } else if (B_alive) {
+    if ((rand() % AARON_CHANCE) == 0) {
+      B_alive = false;
+    }
   }
 }
 
