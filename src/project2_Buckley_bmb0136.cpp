@@ -1,4 +1,11 @@
-// TODO: header
+// project2_Buckley_bmb0136.cpp
+// Author: Brandon Buckley (bmb0136)
+//
+// Build instructions:
+// See the README in https://github.com/bmb0136/COMP-2710
+//
+// Help used:
+// 
 
 #include <iostream>
 #include <stdlib.h>
@@ -7,8 +14,8 @@
 using namespace std;
 
 const int NUM_RUNS = 10000;
-const int AARON_CHANCE = 3;
-const int BOB_CHANCE = 2;
+const int AARON_CHANCE = 100 / 3;
+const int BOB_CHANCE = 100 / 2;
 // Don't need one for Charlie since he never misses
 
 // Required functions
@@ -20,6 +27,7 @@ void Charlie_shoots(bool& A_alive, bool& B_alive);
 
 // My functions
 void waitForKey();
+bool randomChance(int percent);
 
 struct StrategyResult {
 public:
@@ -91,25 +99,17 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
 
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
   if (C_alive) {
-    if ((rand() % AARON_CHANCE) == 0) {
-      C_alive = false;
-    }
+    C_alive = !randomChance(AARON_CHANCE);
   } else if (B_alive) {
-    if ((rand() % AARON_CHANCE) == 0) {
-      B_alive = false;
-    }
+    B_alive = !randomChance(AARON_CHANCE);
   }
 }
 
 void Bob_shoots(bool& A_alive, bool& C_alive) {
   if (C_alive) {
-    if ((rand() % BOB_CHANCE) == 0) {
-      C_alive = false;
-    }
+    C_alive = !randomChance(BOB_CHANCE);
   } else if (A_alive) {
-    if ((rand() % BOB_CHANCE) == 0) {
-      A_alive = false;
-    }
+    A_alive = !randomChance(BOB_CHANCE);
   }
 }
 
@@ -132,13 +132,9 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
   }
 
   if (C_alive) {
-    if ((rand() % AARON_CHANCE) == 0) {
-      C_alive = false;
-    }
+    C_alive = !randomChance(AARON_CHANCE);
   } else if (B_alive) {
-    if ((rand() % AARON_CHANCE) == 0) {
-      B_alive = false;
-    }
+    B_alive = !randomChance(AARON_CHANCE);
   }
 }
 
@@ -178,7 +174,7 @@ StrategyResult simulateTruel(shootFunc aaronStrategy) {
   } else if (c) {
     result.charlieWins++;
   }
-  
+
   return result;
 }
 
@@ -190,4 +186,8 @@ void printResult(StrategyResult result) {
   cout << "Aaron won " << result.aaronWins << "/" << NUM_RUNS << " truels or " << aaronPercent << "%" << endl; 
   cout << "Bob won " << result.bobWins << "/" << NUM_RUNS << " truels or " << bobPercent << "%" << endl; 
   cout << "Charlie won " << result.charlieWins << "/" << NUM_RUNS << " truels or " << charliePercent << "%" << endl; 
+}
+
+bool randomChance(int percent) {
+  return (rand() % 100) < percent;
 }
