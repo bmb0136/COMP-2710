@@ -7,8 +7,8 @@
 using namespace std;
 
 const int NUM_RUNS = 10000;
-const int AARON_CHANCE = 100 / 3;
-const int BOB_CHANCE = 100 / 2;
+const int AARON_CHANCE = 33;
+const int BOB_CHANCE = 50;
 // Don't need one for Charlie since he never misses
 
 // Required functions
@@ -20,7 +20,6 @@ void Charlie_shoots(bool& A_alive, bool& B_alive);
 
 // My functions
 void waitForKey();
-bool randomChance(int percent);
 
 struct StrategyResult {
 public:
@@ -76,10 +75,6 @@ void waitForKey() {
   cin.ignore().get();
 }
 
-bool randomChance(int percent) {
-  return (rand() % 100) < percent;
-}
-
 bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
   int a = A_alive ? 1 : 0;
   int b = B_alive ? 1 : 0;
@@ -88,17 +83,17 @@ bool at_least_two_alive(bool A_alive, bool B_alive, bool C_alive) {
 }
 
 void Aaron_shoots1(bool& B_alive, bool& C_alive) {
-  if (C_alive && randomChance(AARON_CHANCE)) {
+  if (C_alive && (rand() % 100) < AARON_CHANCE) {
     C_alive = false;
-  } else if (B_alive && randomChance(AARON_CHANCE)) {
+  } else if (B_alive && (rand() % 100) < AARON_CHANCE) {
     B_alive = false;
   }
 }
 
 void Bob_shoots(bool& A_alive, bool& C_alive) {
-  if (C_alive && randomChance(BOB_CHANCE)) {
+  if (C_alive && (rand() % 100) < BOB_CHANCE) {
     C_alive = false;
-  } else if (A_alive && randomChance(BOB_CHANCE)) {
+  } else if (A_alive && (rand() % 100) < BOB_CHANCE) {
     A_alive = false;
   }
 }
@@ -121,10 +116,10 @@ void Aaron_shoots2(bool& B_alive, bool& C_alive) {
     return;
   }
 
-  if (C_alive) {
-    C_alive = !randomChance(AARON_CHANCE);
-  } else if (B_alive) {
-    B_alive = !randomChance(AARON_CHANCE);
+  if (C_alive && (rand() % 100) < AARON_CHANCE) {
+    C_alive = false;
+  } else if (B_alive && (rand() % 100) < AARON_CHANCE) {
+    B_alive = false;
   }
 }
 
