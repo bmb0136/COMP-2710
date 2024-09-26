@@ -66,6 +66,13 @@ int main() {
   }
 
   printResult(strategy2);
+  cout << endl;
+
+  if (strategy1.aaronWins > strategy2.aaronWins) {
+    cout << "Strategy 1 is better than strategy 2." << endl;
+  } else {
+    cout << "Strategy 2 is better than strategy 1." << endl;
+  }
 
   return 0;
 }
