@@ -7,7 +7,9 @@
 // Help used:
 // 
 
+#include <cassert>
 #include <iostream>
+#include <ostream>
 #include <stdlib.h>
 #include <ctime>
 
@@ -45,9 +47,15 @@ typedef void(*shootFunc)(bool&, bool&);
 StrategyResult simulateTruel(shootFunc aaronStrategy);
 void printResult(StrategyResult result);
 
+// Unit tests
+void test_at_least_two_alive();
+
 int main() {
   // Init random
   srand(time(0));
+
+  test_at_least_two_alive();
+  waitForKey();
 
   cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
 
@@ -83,6 +91,42 @@ int main() {
   }
 
   return 0;
+}
+
+void test_at_least_two_alive() {
+  cout << "Unit Testing 1: Function 1 at_least_two_alive()" << endl;
+
+  cout << "\tCase 1: Aaron alive, Bob alive, Charlie alive" << endl;
+  assert(true == at_least_two_alive(true, true, true));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 2: Aaron alive, Bob alive, Charlie dead" << endl;
+  assert(true == at_least_two_alive(true, true, false));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 3: Aaron alive, Bob dead, Charlie alive" << endl;
+  assert(true == at_least_two_alive(true, false, true));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 4: Aaron alive, Bob dead, Charlie dead" << endl;
+  assert(false == at_least_two_alive(true, false, false));
+  cout << "\t\tCase passed" << endl;
+  
+  cout << "\tCase 5: Aaron dead, Bob alive, Charlie alive" << endl;
+  assert(true == at_least_two_alive(false, true, true));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 6: Aaron dead, Bob alive, Charlie dead" << endl;
+  assert(false == at_least_two_alive(false, true, false));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 7: Aaron dead, Bob dead, Charlie alive" << endl;
+  assert(false == at_least_two_alive(false, false, true));
+  cout << "\t\tCase passed" << endl;
+
+  cout << "\tCase 8: Aaron dead, Bob dead, Charlie dead" << endl;
+  assert(false == at_least_two_alive(false, false, false));
+  cout << "\t\tCase passed" << endl;
 }
 
 void waitForKey() {
