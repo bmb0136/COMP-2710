@@ -62,6 +62,8 @@ int main() {
   waitForKey();
   test_Aaron_shoots1();
   waitForKey();
+  test_Bob_shoots();
+  waitForKey();
 
   cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
 
@@ -156,6 +158,30 @@ void test_Aaron_shoots1() {
   b = true;
   c = false;
   Aaron_shoots1(b, c);
+  assert(false == c);
+}
+
+void test_Bob_shoots() {
+  cout << "Unit Testing 3: Bob_shoots(Aaron_alive, Charlie_alive)" << endl;
+
+  bool a, c;
+
+  cout << "\tCase 1: Aaron alive, Charlie alive\n\t\tBob is shooting at Charlie" << endl;
+  a = true;
+  c = true;
+  Bob_shoots(a, c);
+  assert(true == a);
+
+  cout << "\tCase 2: Aaron dead, Charlie alive\n\t\tBob is shooting at Charlie" << endl;
+  a = false;
+  c = true;
+  Bob_shoots(a, c);
+  assert(false == a);
+
+  cout << "\tCase 3: Aaron alive, Charlie dead\n\t\tBob is shooting at Aaron" << endl;
+  a = true;
+  c = false;
+  Bob_shoots(a, c);
   assert(false == c);
 }
 
