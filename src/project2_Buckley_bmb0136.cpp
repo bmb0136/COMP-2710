@@ -55,6 +55,7 @@ void test_Bob_shoots();
 void test_Charlie_shoots();
 
 int main() {
+  cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
   // Init random
   srand(time(0));
 
@@ -66,8 +67,6 @@ int main() {
   waitForKey();
   test_Charlie_shoots();
   waitForKey();
-
-  cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
 
   cout << "Ready to run strategy 1 (run " << NUM_RUNS << " times)" << endl;
   waitForKey();
