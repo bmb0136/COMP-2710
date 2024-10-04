@@ -67,6 +67,8 @@ int main() {
   waitForKey();
   test_Charlie_shoots();
   waitForKey();
+  test_Aaron_shoots2();
+  waitForKey();
 
   cout << "Ready to run strategy 1 (run " << NUM_RUNS << " times)" << endl;
   waitForKey();
@@ -163,7 +165,7 @@ void test_Aaron_shoots1() {
 }
 
 void test_Aaron_shoots2() {
-  cout << "Unit Testing 4: Aaron_shoots2(Bob_alive, Charlie_alive)" << endl;
+  cout << "Unit Testing 5: Aaron_shoots2(Bob_alive, Charlie_alive)" << endl;
 
   bool b, c;
 
