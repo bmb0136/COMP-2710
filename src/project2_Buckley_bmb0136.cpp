@@ -49,6 +49,10 @@ void printResult(StrategyResult result);
 
 // Unit tests
 void test_at_least_two_alive();
+void test_Aaron_shoots1();
+void test_Aaron_shoots2();
+void test_Bob_shoots();
+void test_Charlie_shoots();
 
 int main() {
   // Init random
