@@ -16,8 +16,8 @@
 using namespace std;
 
 const int NUM_RUNS = 10000;
-const int AARON_CHANCE = 100 / 3;
-const int BOB_CHANCE = 100 / 2;
+const int AARON_CHANCE = 3;
+const int BOB_CHANCE = 2;
 // Don't need one for Charlie since he never misses
 
 // Required functions
@@ -29,7 +29,7 @@ void Charlie_shoots(bool& A_alive, bool& B_alive);
 
 // My functions
 void waitForKey();
-bool randomChance(int percent);
+bool randomChance(int fraction);
 
 struct StrategyResult {
 public:
@@ -341,6 +341,6 @@ void printResult(StrategyResult result) {
   cout << "Charlie won " << result.charlieWins << "/" << NUM_RUNS << " truels or " << charliePercent << "%" << endl; 
 }
 
-bool randomChance(int percent) {
-  return (rand() % 100) < percent;
+bool randomChance(int fraction) {
+  return (rand() % fraction) == 0;
 }
