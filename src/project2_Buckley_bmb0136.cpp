@@ -150,13 +150,13 @@ void test_Aaron_shoots1() {
   b = false;
   c = true;
   Aaron_shoots1(b, c);
-  assert(true == b);
+  assert(false == b);
 
   cout << "\tCase 2: Bob alive, Charlie dead\n\t\tAaron is shooting at Bob" << endl;
   b = true;
   c = false;
   Aaron_shoots1(b, c);
-  assert(true == c);
+  assert(false == c);
 }
 
 void waitForKey() {
