@@ -60,6 +60,8 @@ int main() {
 
   test_at_least_two_alive();
   waitForKey();
+  test_Aaron_shoots1();
+  waitForKey();
 
   cout << "*** Welcome to Brandon's Truel of the Fates Simulator ***" << endl;
 
@@ -131,6 +133,27 @@ void test_at_least_two_alive() {
   cout << "\tCase 8: Aaron dead, Bob dead, Charlie dead" << endl;
   assert(false == at_least_two_alive(false, false, false));
   cout << "\t\tCase passed" << endl;
+}
+
+void test_Aaron_shoots1() {
+  cout << "Unit Testing 2: Aaron_shoots1(Bob_alive, Charlie_alive)" << endl;
+
+  bool b, c;
+
+  cout << "\tCase 1: Bob alive, Charlie alive\n\t\tAaron is shooting at Charlie" << endl;
+  b = c = true;
+  Aaron_shoots1(b, c);
+  assert(true == b);
+
+  cout << "\tCase 2: Bob dead, Charlie alive\n\t\tAaron is shooting at Charlie" << endl;
+  b = c = true;
+  Aaron_shoots1(b, c);
+  assert(true == b);
+
+  cout << "\tCase 2: Bob alive, Charlie dead\n\t\tAaron is shooting at Bob" << endl;
+  b = c = true;
+  Aaron_shoots1(b, c);
+  assert(true == c);
 }
 
 void waitForKey() {
