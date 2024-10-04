@@ -5,7 +5,7 @@
 // See the README in https://github.com/bmb0136/COMP-2710
 //
 // Help used:
-// 
+// See analysis I submitted for who I talked to about it
 
 #include <iostream>
 #include <stdlib.h>
