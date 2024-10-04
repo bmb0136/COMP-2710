@@ -141,17 +141,20 @@ void test_Aaron_shoots1() {
   bool b, c;
 
   cout << "\tCase 1: Bob alive, Charlie alive\n\t\tAaron is shooting at Charlie" << endl;
-  b = c = true;
+  b = true;
+  c = true;
   Aaron_shoots1(b, c);
   assert(true == b);
 
   cout << "\tCase 2: Bob dead, Charlie alive\n\t\tAaron is shooting at Charlie" << endl;
-  b = c = true;
+  b = false;
+  c = true;
   Aaron_shoots1(b, c);
   assert(true == b);
 
   cout << "\tCase 2: Bob alive, Charlie dead\n\t\tAaron is shooting at Bob" << endl;
-  b = c = true;
+  b = true;
+  c = false;
   Aaron_shoots1(b, c);
   assert(true == c);
 }
