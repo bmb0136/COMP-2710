@@ -162,6 +162,31 @@ void test_Aaron_shoots1() {
   assert(false == c);
 }
 
+void test_Aaron_shoots2() {
+  cout << "Unit Testing 4: Aaron_shoots2(Bob_alive, Charlie_alive)" << endl;
+
+  bool b, c;
+
+  cout << "\tCase 1: Bob alive, Charlie alive\n\t\tAaron intentionally misses his first shot\n\t\tBoth Bob and Charlie are alive." << endl;
+  b = true;
+  c = true;
+  Aaron_shoots2(b, c);
+  assert(true == b);
+  assert(true == c);
+
+  cout << "\tCase 2: Bob dead, Charlie alive\n\t\tAaron is shooting at Charlie" << endl;
+  b = false;
+  c = true;
+  Aaron_shoots2(b, c);
+  assert(false == b);
+
+  cout << "\tCase 3: Bob alive, Charlie dead\n\t\tAaron is shooting at Bob" << endl;
+  b = true;
+  c = false;
+  Aaron_shoots2(b, c);
+  assert(false == c);
+}
+
 void test_Bob_shoots() {
   cout << "Unit Testing 3: Bob_shoots(Aaron_alive, Charlie_alive)" << endl;
 
