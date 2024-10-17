@@ -22,6 +22,7 @@ int main() {
     cout << "Enter the file name for file " << (i + 1) << ": ";
     cin >> path;
     if (path == "quit") {
+      cout << "Input cancelled. Proceeding to calculation..." << endl;
       break;
     }
 
@@ -33,15 +34,18 @@ int main() {
     }
 
     SortedList<float> dataFromFile;
-    if (!tryParseFile(dataFromFile, file)) {
+    if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
       cout << "Not an input file. Illegal content/structure detected. Please try again" << endl;
       i--;
       continue;
     }
-  }
 
-  for (int i = 0; i < data.size(); i++) {
-    cout << data.get(i) << endl;
+    cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
+    for (int j = 0; j < dataFromFile.size(); j++) {
+      float x = dataFromFile.get(j);
+      cout << x << endl;
+      data.add(x);
+    }
   }
 
   cout << "*** Goodbye ***" << endl;
