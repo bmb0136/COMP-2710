@@ -8,7 +8,7 @@ using namespace std;
 template class SortedList<float>;
 
 int getFileCount();
-bool tryParseFile(SortedList<float>& data, ifstream& file);
+bool tryParseFile(vector<float>& data, ifstream& file);
 float getMean(SortedList<float> data);
 float getMedian(SortedList<float> data);
 float getMode(SortedList<float> data);
@@ -37,7 +37,7 @@ int main() {
       continue;
     }
 
-    SortedList<float> dataFromFile;
+    vector<float> dataFromFile;
     if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
       cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
       i--;
@@ -46,7 +46,7 @@ int main() {
 
     cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
     for (int j = 0; j < dataFromFile.size(); j++) {
-      float x = dataFromFile.get(j);
+      float x = dataFromFile[j];
       cout << x << endl;
       data.add(x);
     }
@@ -92,7 +92,7 @@ float getMode(SortedList<float> data) {
   return -1;
 }
 
-bool tryParseFile(SortedList<float>& data, ifstream& file) {
+bool tryParseFile(vector<float>& data, ifstream& file) {
   while (!file.eof()) {
     string line;
     getline(file, line);
@@ -107,7 +107,7 @@ bool tryParseFile(SortedList<float>& data, ifstream& file) {
       return false;
     }
 
-    data.add(value);
+    data.push_back(value);
   }
   return true;
 }
