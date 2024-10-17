@@ -14,6 +14,7 @@ int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
 
   int files = getFileCount();
+  cout << endl; // Examples have this extra newline
 
   SortedList<float> data;
   for (int i = 0; i < files; i++) {
@@ -35,7 +36,7 @@ int main() {
 
     SortedList<float> dataFromFile;
     if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
-      cout << "Not an input file. Illegal content/structure detected. Please try again" << endl;
+      cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
       i--;
       continue;
     }
