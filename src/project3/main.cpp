@@ -77,7 +77,11 @@ int main() {
 }
 
 float getMean(SortedList<float> data) {
-  return -1;
+  float sum = 0;
+  for (int i = 0; i < data.size(); i++) {
+    sum += data.get(i);
+  }
+  return sum / data.size();
 }
 
 float getMedian(SortedList<float> data) {
