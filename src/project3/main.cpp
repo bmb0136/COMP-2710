@@ -85,7 +85,13 @@ float getMean(SortedList<float> data) {
 }
 
 float getMedian(SortedList<float> data) {
-  return -1;
+  int len = data.size();
+  // Two median values
+  if (len % 2 == 0) {
+    return (data.get(len / 2) + data.get((len / 2) - 1)) / 2.0f;
+  }
+  // One median value
+  return data.get(len / 2);
 }
 
 float getMode(SortedList<float> data) {
