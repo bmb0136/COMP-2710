@@ -46,6 +46,8 @@ int main() {
       cout << x << endl;
       data.add(x);
     }
+
+    cout << endl; // Examples have this extra newline
   }
 
   cout << "*** Goodbye ***" << endl;
