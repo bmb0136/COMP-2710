@@ -14,12 +14,19 @@ int main() {
     cin >> files;
     if (cin.fail()) {
       cin.clear();
+      string quit;
+      cin >> quit;
+      if (quit == "quit") {
+        files = 0;
+        break;
+      }
       cin.ignore(99999, '\n');
-      cout << "Invalid number" << endl;
+      cout << "Please enter a non-zero integer" << endl;
     } else {
       break;
     }
   }
 
+  cout << "*** Goodbye ***" << endl;
   return 0;
 }
