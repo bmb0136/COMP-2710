@@ -1,74 +1,24 @@
 #ifndef LIST_H
 #define LIST_H
 
-template <typename T> struct Node {
-public:
-  T value;
-  Node<T>* next;
-  Node(T value) {
-    this->value = value;
-    this->next = nullptr;
-  }
-  void dispose() {
-    if (next) {
-      next->dispose();
-      delete next;
-    }
-  }
-};
-
+#include <vector>
+using namespace std;
 template <typename T> class SortedList {
 private:
-  Node<T>* head = nullptr;
-  int size = 0;
+  vector<T> data;
 public:
-  int getSize() { return this->size; }
+  int size() { return data.size(); }
   void add(T value) {
-    if (!head) {
-      head = new Node<T>(value);
-      size = 1;
-      return;
-    }
-
-    Node<T>* prev = nullptr;
-    Node<T>* current = head;
-
-    while (current && value > current->value) {
-      prev = current;
-      current = current->next;
-    }
-
-    if (!prev) {
-      Node<T>* oldHead = head;
-      head = new Node<T>(value);
-      head->next = oldHead;
-    } else if (!current) {
-      prev->next = new Node<T>(value);
-    } else {
-      prev->next = new Node<T>(value);
-      prev->next->next = current;
-    }
-
-    size++;
-  }
-  void clear() {
-    size = 0;
-    if (head) {
-      head->dispose();
-      delete head;
-    }
-  }
-  T* get(int i) {
-    Node<T>* current = head;
-
-    while (i-- > 0) {
-      if (!current) {
-        return nullptr;
+    for (int i = 0; i < data.size(); i++) {
+      if (value < data[i]) {
+        data.insert(data.begin() + i, value);
+        return;
       }
-      current = current->next;
     }
-
-    return &current->value;
+    data.push_back(value);
+  }
+  T get(int i) {
+    return data[i];
   }
 };
 
