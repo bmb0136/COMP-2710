@@ -9,6 +9,9 @@ template class SortedList<float>;
 
 int getFileCount();
 bool tryParseFile(SortedList<float>& data, ifstream& file);
+float getMean(SortedList<float> data);
+float getMedian(SortedList<float> data);
+float getMode(SortedList<float> data);
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
@@ -23,7 +26,7 @@ int main() {
     cout << "Enter the file name for file " << (i + 1) << ": ";
     cin >> path;
     if (path == "quit") {
-      cout << "Input cancelled. Proceeding to calculation..." << endl;
+      cout << "Input cancelled. Proceeding to calculation..." << endl << endl;
       break;
     }
 
@@ -51,8 +54,38 @@ int main() {
     cout << endl; // Examples have this extra newline
   }
 
+  cout << "*** Summarized Statistics ***" << endl << endl;
+
+  cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
+  for (int i = 0; i < data.size(); i++) {
+    cout << data.get(i);
+    if (i != data.size() - 1) {
+      cout << ", ";
+    } else {
+      cout << endl;
+    }
+  }
+  cout << endl;
+
+  cout << "The mean is " << getMean(data) << endl;
+  cout << "The median is " << getMedian(data) << endl;
+  cout << "The mode is " << getMode(data) << endl;
+  cout << endl; // Examples have this extra newline
+
   cout << "*** Goodbye ***" << endl;
   return 0;
+}
+
+float getMean(SortedList<float> data) {
+  return -1;
+}
+
+float getMedian(SortedList<float> data) {
+  return -1;
+}
+
+float getMode(SortedList<float> data) {
+  return -1;
 }
 
 bool tryParseFile(SortedList<float>& data, ifstream& file) {
