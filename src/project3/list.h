@@ -41,7 +41,9 @@ public:
     if (!current) {
       prev->next = new Node<T>(value);
     } else {
+      Node<T>* oldNext = current->next;
       current->next = new Node<T>(value);
+      current->next->next = oldNext;
     }
 
     size++;
