@@ -38,12 +38,15 @@ public:
       current = current->next;
     }
 
-    if (!current) {
+    if (!prev) {
+      Node<T>* oldHead = head;
+      head = new Node<T>(value);
+      head->next = oldHead;
+    } else if (!current) {
       prev->next = new Node<T>(value);
     } else {
-      Node<T>* oldNext = current->next;
-      current->next = new Node<T>(value);
-      current->next->next = oldNext;
+      prev->next = new Node<T>(value);
+      prev->next->next = current;
     }
 
     size++;
