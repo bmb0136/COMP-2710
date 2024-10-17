@@ -22,6 +22,7 @@ private:
   Node<T>* head;
   int size = 0;
 public:
+  int getSize() { return this->size; }
   void add(T value) {
     if (!head) {
       head = new Node<T>(value);
