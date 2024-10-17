@@ -19,7 +19,7 @@ public:
 
 template <typename T> class SortedList {
 private:
-  Node<T>* head;
+  Node<T>* head = nullptr;
   int size = 0;
 public:
   int getSize() { return this->size; }
