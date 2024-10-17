@@ -1,5 +1,9 @@
 #include <iostream>
+#include "list.h"
+
 using namespace std;
+
+template class SortedList<float>;
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
