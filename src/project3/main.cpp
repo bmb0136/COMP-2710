@@ -41,8 +41,11 @@ int main() {
     if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
       cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
       i--;
+      file.close();
       continue;
     }
+
+    file.close();
 
     cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
     for (int j = 0; j < dataFromFile.size(); j++) {
