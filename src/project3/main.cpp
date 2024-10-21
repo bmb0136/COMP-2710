@@ -57,23 +57,25 @@ int main() {
     cout << endl; // Examples have this extra newline
   }
 
-  cout << "*** Summarized Statistics ***" << endl << endl;
+  if (data.size() > 0) {
+    cout << "*** Summarized Statistics ***" << endl << endl;
 
-  cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
-  for (int i = 0; i < data.size(); i++) {
-    cout << data.get(i);
-    if (i != data.size() - 1) {
-      cout << ", ";
-    } else {
-      cout << endl;
+    cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
+    for (int i = 0; i < data.size(); i++) {
+      cout << data.get(i);
+      if (i != data.size() - 1) {
+        cout << ", ";
+      } else {
+        cout << endl;
+      }
     }
-  }
-  cout << endl;
+    cout << endl;
 
-  cout << "The mean is " << getMean(data) << endl;
-  cout << "The median is " << getMedian(data) << endl;
-  cout << "The mode is " << getMode(data) << endl;
-  cout << endl; // Examples have this extra newline
+    cout << "The mean is " << getMean(data) << endl;
+    cout << "The median is " << getMedian(data) << endl;
+    cout << "The mode is " << getMode(data) << endl;
+    cout << endl; // Examples have this extra newline
+  }
 
   cout << "*** Goodbye ***" << endl;
   return 0;
