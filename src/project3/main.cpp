@@ -99,6 +99,8 @@ void saveStatistics(SortedList<float> data) {
   cout << "The median is " << getMedian(data) << endl;
   output << "The mode is " << getMode(data) << endl;
   cout << "The mode is " << getMode(data) << endl;
+
+  output.close();
 }
 
 float getMean(SortedList<float> data) {
