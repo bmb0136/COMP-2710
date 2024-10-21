@@ -12,6 +12,7 @@ bool tryParseFile(vector<float>& data, ifstream& file);
 float getMean(SortedList<float> data);
 float getMedian(SortedList<float> data);
 float getMode(SortedList<float> data);
+void saveStatistics(SortedList<float> data);
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
@@ -58,27 +59,46 @@ int main() {
   }
 
   if (data.size() > 0) {
-    cout << "*** Summarized Statistics ***" << endl << endl;
-
-    cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
-    for (int i = 0; i < data.size(); i++) {
-      cout << data.get(i);
-      if (i != data.size() - 1) {
-        cout << ", ";
-      } else {
-        cout << endl;
-      }
-    }
-    cout << endl;
-
-    cout << "The mean is " << getMean(data) << endl;
-    cout << "The median is " << getMedian(data) << endl;
-    cout << "The mode is " << getMode(data) << endl;
-    cout << endl; // Examples have this extra newline
+    saveStatistics(data);
   }
+  cout << endl;
 
   cout << "*** Goodbye ***" << endl;
   return 0;
+}
+
+void saveStatistics(SortedList<float> data) {
+  ofstream output("output.txt");
+  if (!output.is_open()) {
+    cout << "Failed to save results" << endl;
+    return;
+  }
+
+  output << "*** Summarized Statistics ***" << endl << endl;
+  cout << "*** Summarized Statistics ***" << endl << endl;
+
+  output << "The orderly sorted list of " << data.size() << " values is:" << endl;
+  cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
+  for (int i = 0; i < data.size(); i++) {
+    output << data.get(i);
+    cout << data.get(i);
+    if (i != data.size() - 1) {
+      output << ", ";
+      cout << ", ";
+    } else {
+      output << endl;
+      cout << endl;
+    }
+  }
+  output << endl;
+  cout << endl;
+
+  output << "The mean is " << getMean(data) << endl;
+  cout << "The mean is " << getMean(data) << endl;
+  output << "The median is " << getMedian(data) << endl;
+  cout << "The median is " << getMedian(data) << endl;
+  output << "The mode is " << getMode(data) << endl;
+  cout << "The mode is " << getMode(data) << endl;
 }
 
 float getMean(SortedList<float> data) {
