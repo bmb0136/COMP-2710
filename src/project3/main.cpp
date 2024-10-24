@@ -129,7 +129,28 @@ float getMedian(SortedList<float> data) {
 }
 
 float getMode(SortedList<float> data) {
-  return -1;
+  float sum = 0;
+  int count = 0;
+  int frequency = 0;
+
+  int i = 0;
+  while (i < data.size()) {
+    int j = 0;
+    while ((i + j) < data.size() && data.get(i) == data.get(i + j)) {
+      j++;
+    }
+    if (j > frequency) {
+      frequency = j;
+      count = 1;
+      sum = data.get(i);
+    } else if (j == frequency) {
+      count++;
+      sum += data.get(i);
+    }
+    i += j;
+  }
+
+  return sum / count;
 }
 
 bool tryParseFile(vector<float>& data, ifstream& file) {
