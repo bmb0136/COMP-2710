@@ -128,26 +128,32 @@ float getMedian(SortedList<float> data) {
   return data.get(len / 2);
 }
 
+// Since the data is sorted, we can just count the
+// number of duplicate elements in a row and maximize
+// for the frequency, with the edge case that if
+// the frequency is the same we average them together
+// instead of replacing the current max
 float getMode(SortedList<float> data) {
   float sum = 0;
   int count = 0;
-  int frequency = 0;
+  int maxFrequency = 0;
 
   int i = 0;
   while (i < data.size()) {
-    int j = 1;
-    while ((i + j) < data.size() && data.get(i) == data.get(i + j)) {
-      j++;
+    // We can start at j=1 since data[i + j] == data[i] will always be true for j=0
+    int n = 1;
+    while ((i + n) < data.size() && data.get(i) == data.get(i + n)) {
+      n++;
     }
-    if (j > frequency) {
-      frequency = j;
+    if (n > maxFrequency) {
+      maxFrequency = n;
       count = 1;
       sum = data.get(i);
-    } else if (j == frequency) {
+    } else if (n == maxFrequency) {
       count++;
       sum += data.get(i);
     }
-    i += j;
+    i += n;
   }
 
   return sum / count;
