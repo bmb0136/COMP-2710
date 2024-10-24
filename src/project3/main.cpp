@@ -13,6 +13,7 @@ float getMean(SortedList<float> data);
 float getMedian(SortedList<float> data);
 float getMode(SortedList<float> data);
 void saveStatistics(SortedList<float> data);
+bool readFile(string path, SortedList<float>& data);
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
@@ -31,31 +32,9 @@ int main() {
       break;
     }
 
-    ifstream file(path);
-    if (!file.is_open()) {
-      cout << "File not found. Please try again" << endl;
+    if(!readFile(path, data)) {
       i--;
-      continue;
     }
-
-    vector<float> dataFromFile;
-    if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
-      cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
-      i--;
-      file.close();
-      continue;
-    }
-
-    file.close();
-
-    cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
-    for (int j = 0; j < dataFromFile.size(); j++) {
-      float x = dataFromFile[j];
-      cout << x << endl;
-      data.add(x);
-    }
-
-    cout << endl; // Examples have this extra newline
   }
 
   if (data.size() > 0) {
@@ -65,6 +44,34 @@ int main() {
 
   cout << "*** Goodbye ***" << endl;
   return 0;
+}
+
+bool readFile(string path, SortedList<float>& data) {
+
+  ifstream file(path);
+  if (!file.is_open()) {
+    cout << "File not found. Please try again" << endl;
+    return false;
+  }
+
+  vector<float> dataFromFile;
+  if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
+    cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
+    file.close();
+    return false;
+  }
+
+  file.close();
+
+  cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
+  for (int j = 0; j < dataFromFile.size(); j++) {
+    float x = dataFromFile[j];
+    cout << x << endl;
+    data.add(x);
+  }
+
+  cout << endl; // Examples have this extra newline
+  return true;
 }
 
 void saveStatistics(SortedList<float> data) {
