@@ -140,7 +140,7 @@ float getMode(SortedList<float> data) {
 
   int i = 0;
   while (i < data.size()) {
-    // We can start at j=1 since data[i + j] == data[i] will always be true for j=0
+    // We can start at n=1 since data[i + n] == data[i] will always be true for n=0
     int n = 1;
     while ((i + n) < data.size() && data.get(i) == data.get(i + n)) {
       n++;
