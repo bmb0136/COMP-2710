@@ -135,7 +135,7 @@ float getMode(SortedList<float> data) {
 
   int i = 0;
   while (i < data.size()) {
-    int j = 0;
+    int j = 1;
     while ((i + j) < data.size() && data.get(i) == data.get(i + j)) {
       j++;
     }
