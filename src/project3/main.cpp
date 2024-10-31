@@ -3,6 +3,8 @@
 //
 // Build Instructions: See the README in https://github.com/bmb0136/COMP-2710
 //
+// NOTE: Tests are within the src/project3 folder, not the root of the repo
+//
 // Help Used:
 // I used https://en.cppreference.com/w/cpp/container/vector for the vector<T> docs
 
