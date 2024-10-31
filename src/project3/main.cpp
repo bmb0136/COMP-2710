@@ -15,13 +15,15 @@ using namespace std;
 
 template class SortedList<float>;
 
+typedef  SortedList<float> Data;
+
 int getFileCount();
 bool tryParseFile(vector<float>& data, ifstream& file);
-float getMean(SortedList<float> data);
-float getMedian(SortedList<float> data);
-float getMode(SortedList<float> data);
-void saveStatistics(SortedList<float> data);
-bool readFile(string path, SortedList<float>& data);
+float getMean(Data data);
+float getMedian(Data data);
+float getMode(Data data);
+void saveStatistics(Data data);
+bool readFile(string path, Data& data);
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
@@ -29,7 +31,7 @@ int main() {
   int files = getFileCount();
   cout << endl; // Examples have this extra newline
 
-  SortedList<float> data;
+  Data data;
   for (int i = 0; i < files; i++) {
     string path;
 
@@ -54,7 +56,7 @@ int main() {
   return 0;
 }
 
-bool readFile(string path, SortedList<float>& data) {
+bool readFile(string path, Data& data) {
 
   ifstream file(path);
   if (!file.is_open()) {
@@ -82,7 +84,7 @@ bool readFile(string path, SortedList<float>& data) {
   return true;
 }
 
-void saveStatistics(SortedList<float> data) {
+void saveStatistics(Data data) {
   ofstream output("output.txt");
   if (!output.is_open()) {
     cout << "Failed to save results" << endl;
@@ -118,7 +120,7 @@ void saveStatistics(SortedList<float> data) {
   output.close();
 }
 
-float getMean(SortedList<float> data) {
+float getMean(Data data) {
   float sum = 0;
   for (int i = 0; i < data.size(); i++) {
     sum += data.get(i);
@@ -126,7 +128,7 @@ float getMean(SortedList<float> data) {
   return sum / data.size();
 }
 
-float getMedian(SortedList<float> data) {
+float getMedian(Data data) {
   int len = data.size();
   // Two median values
   if (len % 2 == 0) {
@@ -141,7 +143,7 @@ float getMedian(SortedList<float> data) {
 // for the frequency, with the edge case that if
 // the frequency is the same we average them together
 // instead of replacing the current max
-float getMode(SortedList<float> data) {
+float getMode(Data data) {
   float sum = 0;
   int count = 0;
   int maxFrequency = 0;
