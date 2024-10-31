@@ -4,7 +4,7 @@
 // Build Instructions: See the README in https://github.com/bmb0136/COMP-2710
 //
 // Help Used:
-// TODO
+// I used https://en.cppreference.com/w/cpp/container/vector for the vector<T> docs
 
 #include <fstream>
 #include <iostream>
