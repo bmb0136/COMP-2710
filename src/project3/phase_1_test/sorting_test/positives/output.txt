@@ -1,0 +1,8 @@
+*** Summarized Statistics ***
+
+The orderly sorted list of 25 values is:
+1, 2, 3, 4, 4, 6, 12, 12, 12, 15, 15, 15, 17, 18, 18, 19, 20, 21, 22, 23, 23, 25, 25, 25, 25
+
+The mean is 15.28
+The median is 17
+The mode is 25
