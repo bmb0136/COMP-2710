@@ -17,7 +17,7 @@ using namespace std;
 
 template class SortedList<float>;
 
-typedef  SortedList<float> Data;
+typedef SortedList<float> Data;
 
 int getFileCount();
 bool tryParseFile(vector<float>& data, ifstream& file);
