@@ -186,6 +186,10 @@ bool tryParseFile(vector<float>& data, ifstream& file) {
       return false;
     }
 
+    if (lineStream.get() != '\n') {
+      return false;
+    }
+
     data.push_back(value);
   }
   return true;
