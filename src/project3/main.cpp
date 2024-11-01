@@ -186,7 +186,7 @@ bool tryParseFile(vector<float>& data, ifstream& file) {
       return false;
     }
 
-    if (lineStream.get() != '\n') {
+    if (lineStream.get() != '\n' && !lineStream.eof()) {
       return false;
     }
 
