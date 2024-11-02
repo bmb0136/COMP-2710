@@ -11,16 +11,17 @@
 #include <fstream>
 #include <iostream>
 #include <sstream>
+#include "data.h"
 #include "list.h"
 
 using namespace std;
 
-template class SortedList<float>;
+template class SortedList<DataPoint>;
 
-typedef SortedList<float> Data;
+typedef SortedList<DataPoint> Data;
 
 int getFileCount();
-bool tryParseFile(vector<float>& data, ifstream& file);
+bool tryParseFile(vector<DataPoint>& data, ifstream& file);
 float getMean(Data data);
 float getMedian(Data data);
 float getMode(Data data);
@@ -66,7 +67,7 @@ bool readFile(string path, Data& data) {
     return false;
   }
 
-  vector<float> dataFromFile;
+  vector<DataPoint> dataFromFile;
   if (!tryParseFile(dataFromFile, file) || dataFromFile.size() == 0) {
     cout << "Not an input file. Illegal content/structure detected. Please try again" << endl << endl;
     file.close();
@@ -76,9 +77,9 @@ bool readFile(string path, Data& data) {
   file.close();
 
   cout << "The list of " << dataFromFile.size() << " values in file " << path << " is:" << endl;
-  for (int j = 0; j < dataFromFile.size(); j++) {
-    float x = dataFromFile[j];
-    cout << x << endl;
+  for (size_t j = 0; j < dataFromFile.size(); j++) {
+    DataPoint x = dataFromFile[j];
+    cout << x.toString() << endl;
     data.add(x);
   }
 
@@ -99,8 +100,8 @@ void saveStatistics(Data data) {
   output << "The orderly sorted list of " << data.size() << " values is:" << endl;
   cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
   for (int i = 0; i < data.size(); i++) {
-    output << data.get(i);
-    cout << data.get(i);
+    output << data.get(i).value;
+    cout << data.get(i).value;
     if (i != data.size() - 1) {
       output << ", ";
       cout << ", ";
@@ -125,7 +126,7 @@ void saveStatistics(Data data) {
 float getMean(Data data) {
   float sum = 0;
   for (int i = 0; i < data.size(); i++) {
-    sum += data.get(i);
+    sum += data.get(i).value;
   }
   return sum / data.size();
 }
@@ -134,10 +135,10 @@ float getMedian(Data data) {
   int len = data.size();
   // Two median values
   if (len % 2 == 0) {
-    return (data.get(len / 2) + data.get((len / 2) - 1)) / 2.0f;
+    return (data.get(len / 2).value + data.get((len / 2) - 1).value) / 2.0f;
   }
   // One median value
-  return data.get(len / 2);
+  return data.get(len / 2).value;
 }
 
 // Since the data is sorted, we can just count the
@@ -154,16 +155,16 @@ float getMode(Data data) {
   while (i < data.size()) {
     // We can start at n=1 since data[i + n] == data[i] will always be true for n=0
     int n = 1;
-    while ((i + n) < data.size() && data.get(i) == data.get(i + n)) {
+    while ((i + n) < data.size() && data.get(i).value == data.get(i + n).value) {
       n++;
     }
     if (n > maxFrequency) {
       maxFrequency = n;
       count = 1;
-      sum = data.get(i);
+      sum = data.get(i).value;
     } else if (n == maxFrequency) {
       count++;
-      sum += data.get(i);
+      sum += data.get(i).value;
     }
     i += n;
   }
@@ -171,7 +172,7 @@ float getMode(Data data) {
   return sum / count;
 }
 
-bool tryParseFile(vector<float>& data, ifstream& file) {
+bool tryParseFile(vector<DataPoint>& data, ifstream& file) {
   while (!file.eof()) {
     string line;
     getline(file, line);
@@ -180,13 +181,14 @@ bool tryParseFile(vector<float>& data, ifstream& file) {
     }
     stringstream lineStream(line);
 
-    float value;
-    lineStream >> value;
+    string raw;
+    lineStream >> raw;
     if (lineStream.fail()) {
       return false;
     }
 
-    if (lineStream.get() != '\n' && !lineStream.eof()) {
+    DataPoint value;
+    if (!DataPoint::fromString(raw, value)) {
       return false;
     }
 
