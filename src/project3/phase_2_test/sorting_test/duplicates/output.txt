@@ -1,0 +1,15 @@
+*** Summarized Statistics ***
+
+The orderly sorted list of 25 values is:
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+
+The mean is 1
+The median is 1
+The mode is 1
+
+The chronologically sorted list of 25 values is:
+1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1
+
+The mean is 1
+The median is 1
+The mode is 1

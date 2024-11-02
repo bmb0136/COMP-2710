@@ -118,6 +118,9 @@ void saveStatistics(DataList data) {
   output << "The mode is " << getMode(data) << endl;
   cout << "The mode is " << getMode(data) << endl;
 
+  output << endl;
+  cout << endl;
+
   output << "The chronologically sorted list of " << data.size() << " values is:" << endl;
   cout << "The chronologically sorted list of " << data.size() << " values is:" << endl;
   for (int i = 0; i < data.size(); i++) {
