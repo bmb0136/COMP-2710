@@ -58,7 +58,7 @@ public:
     }
 
     // Read hour
-    if (!read2DigitPaddedNum(ss, dp.hour, 0, 24)) {
+    if (!read2DigitPaddedNum(ss, dp.hour, 0, 23)) {
       return false;
     }
    
