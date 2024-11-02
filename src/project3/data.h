@@ -68,7 +68,7 @@ public:
     }
 
     // Read minute
-    if (!read2DigitPaddedNum(ss, dp.minute, 0, 60)) {
+    if (!read2DigitPaddedNum(ss, dp.minute, 0, 59)) {
       return false;
     }
    
@@ -78,7 +78,7 @@ public:
     }
     
     // Read second
-    if (!read2DigitPaddedNum(ss, dp.second, 0, 60)) {
+    if (!read2DigitPaddedNum(ss, dp.second, 0, 59)) {
       return false;
     }
 
