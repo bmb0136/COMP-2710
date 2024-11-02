@@ -210,16 +210,8 @@ bool tryParseFile(vector<DataPoint>& data, ifstream& file) {
     if (line == "") {
       break;
     }
-    stringstream lineStream(line);
-
-    string raw;
-    lineStream >> raw;
-    if (lineStream.fail()) {
-      return false;
-    }
-
     DataPoint value;
-    if (!DataPoint::fromString(raw, value)) {
+    if (!DataPoint::fromString(line, value)) {
       return false;
     }
 
