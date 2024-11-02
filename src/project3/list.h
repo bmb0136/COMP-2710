@@ -35,8 +35,11 @@ public:
     add(value, data, byValue, DataPoint::isValueLessThan);
     add(value, data, byTime, DataPoint::isTimeLessThan);
   }
-  DataPoint get(int i) {
-    return data[i];
+  DataPoint getByTime(int i) {
+    return *byTime[i];
+  }
+  DataPoint getByValue(int i) {
+    return *byValue[i];
   }
 };
 

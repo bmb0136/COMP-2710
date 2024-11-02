@@ -21,6 +21,7 @@ int getFileCount();
 bool tryParseFile(vector<DataPoint>& data, ifstream& file);
 float getMean(DataList data);
 float getMedian(DataList data);
+float getMedianByTime(DataList data);
 float getMode(DataList data);
 void saveStatistics(DataList data);
 bool readFile(string path, DataList& data);
@@ -97,8 +98,8 @@ void saveStatistics(DataList data) {
   output << "The orderly sorted list of " << data.size() << " values is:" << endl;
   cout << "The orderly sorted list of " << data.size() << " values is:" << endl;
   for (int i = 0; i < data.size(); i++) {
-    output << data.get(i).value;
-    cout << data.get(i).value;
+    output << data.getByValue(i).value;
+    cout << data.getByValue(i).value;
     if (i != data.size() - 1) {
       output << ", ";
       cout << ", ";
@@ -117,13 +118,36 @@ void saveStatistics(DataList data) {
   output << "The mode is " << getMode(data) << endl;
   cout << "The mode is " << getMode(data) << endl;
 
+  output << "The chronologically sorted list of " << data.size() << " values is:" << endl;
+  cout << "The chronologically sorted list of " << data.size() << " values is:" << endl;
+  for (int i = 0; i < data.size(); i++) {
+    output << data.getByTime(i).value;
+    cout << data.getByTime(i).value;
+    if (i != data.size() - 1) {
+      output << ", ";
+      cout << ", ";
+    } else {
+      output << endl;
+      cout << endl;
+    }
+  }
+  output << endl;
+  cout << endl;
+
+  output << "The mean is " << getMean(data) << endl;
+  cout << "The mean is " << getMean(data) << endl;
+  output << "The median is " << getMedianByTime(data) << endl;
+  cout << "The median is " << getMedianByTime(data) << endl;
+  output << "The mode is " << getMode(data) << endl;
+  cout << "The mode is " << getMode(data) << endl;
+
   output.close();
 }
 
 float getMean(DataList data) {
   float sum = 0;
   for (int i = 0; i < data.size(); i++) {
-    sum += data.get(i).value;
+    sum += data.getByValue(i).value;
   }
   return sum / data.size();
 }
@@ -132,10 +156,20 @@ float getMedian(DataList data) {
   int len = data.size();
   // Two median values
   if (len % 2 == 0) {
-    return (data.get(len / 2).value + data.get((len / 2) - 1).value) / 2.0f;
+    return (data.getByValue(len / 2).value + data.getByValue((len / 2) - 1).value) / 2.0f;
   }
   // One median value
-  return data.get(len / 2).value;
+  return data.getByValue(len / 2).value;
+}
+
+float getMedianByTime(DataList data) {
+  int len = data.size();
+  // Two median values
+  if (len % 2 == 0) {
+    return (data.getByTime(len / 2).value + data.getByTime((len / 2) - 1).value) / 2.0f;
+  }
+  // One median value
+  return data.getByTime(len / 2).value;
 }
 
 // Since the data is sorted, we can just count the
@@ -152,16 +186,16 @@ float getMode(DataList data) {
   while (i < data.size()) {
     // We can start at n=1 since data[i + n] == data[i] will always be true for n=0
     int n = 1;
-    while ((i + n) < data.size() && data.get(i).value == data.get(i + n).value) {
+    while ((i + n) < data.size() && data.getByValue(i).value == data.getByValue(i + n).value) {
       n++;
     }
     if (n > maxFrequency) {
       maxFrequency = n;
       count = 1;
-      sum = data.get(i).value;
+      sum = data.getByValue(i).value;
     } else if (n == maxFrequency) {
       count++;
-      sum += data.get(i).value;
+      sum += data.getByValue(i).value;
     }
     i += n;
   }
