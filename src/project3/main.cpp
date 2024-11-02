@@ -16,17 +16,14 @@
 
 using namespace std;
 
-template class SortedList<DataPoint>;
-
-typedef SortedList<DataPoint> Data;
 
 int getFileCount();
 bool tryParseFile(vector<DataPoint>& data, ifstream& file);
-float getMean(Data data);
-float getMedian(Data data);
-float getMode(Data data);
-void saveStatistics(Data data);
-bool readFile(string path, Data& data);
+float getMean(DataList data);
+float getMedian(DataList data);
+float getMode(DataList data);
+void saveStatistics(DataList data);
+bool readFile(string path, DataList& data);
 
 int main() {
   cout << "*** Welcome to Brandon's Data Analyzer ***" << endl;
@@ -34,7 +31,7 @@ int main() {
   int files = getFileCount();
   cout << endl; // Examples have this extra newline
 
-  Data data;
+  DataList data;
   for (int i = 0; i < files; i++) {
     string path;
 
@@ -59,7 +56,7 @@ int main() {
   return 0;
 }
 
-bool readFile(string path, Data& data) {
+bool readFile(string path, DataList& data) {
 
   ifstream file(path);
   if (!file.is_open()) {
@@ -87,7 +84,7 @@ bool readFile(string path, Data& data) {
   return true;
 }
 
-void saveStatistics(Data data) {
+void saveStatistics(DataList data) {
   ofstream output("output.txt");
   if (!output.is_open()) {
     cout << "Failed to save results" << endl;
@@ -123,7 +120,7 @@ void saveStatistics(Data data) {
   output.close();
 }
 
-float getMean(Data data) {
+float getMean(DataList data) {
   float sum = 0;
   for (int i = 0; i < data.size(); i++) {
     sum += data.get(i).value;
@@ -131,7 +128,7 @@ float getMean(Data data) {
   return sum / data.size();
 }
 
-float getMedian(Data data) {
+float getMedian(DataList data) {
   int len = data.size();
   // Two median values
   if (len % 2 == 0) {
@@ -146,7 +143,7 @@ float getMedian(Data data) {
 // for the frequency, with the edge case that if
 // the frequency is the same we average them together
 // instead of replacing the current max
-float getMode(Data data) {
+float getMode(DataList data) {
   float sum = 0;
   int count = 0;
   int maxFrequency = 0;

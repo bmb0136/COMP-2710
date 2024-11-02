@@ -83,6 +83,18 @@ public:
 
     return true;
   }
+  static bool isTimeLessThan(DataPoint x, DataPoint other) {
+    if (x.hour < other.hour) {
+      return true;
+    }
+    if (x.minute < other.minute) {
+      return true;
+    }
+    return x.second < other.second;
+  }
+  static bool isValueLessThan(DataPoint x, DataPoint other) {
+    return x.value < other.value;
+  }
 };
 
 #endif
