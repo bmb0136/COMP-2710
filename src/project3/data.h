@@ -31,9 +31,15 @@ public:
   string toString() {
     stringstream ss;
 
+    ss << fixed;
+    ss.precision(2);
     ss << value << '\t';
     ss << setw(2) << setfill('0');
-    ss << hour << '.' << minute << '.' << second;
+    ss << hour << '.';
+    ss << setw(2) << setfill('0');
+    ss << minute << '.';
+    ss << setw(2) << setfill('0');
+    ss << second;
 
     return ss.str();
   }

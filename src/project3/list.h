@@ -10,14 +10,13 @@ typedef bool(*dp_comparator)(DataPoint x, DataPoint y);
 
 class DataList {
 private:
-  vector<DataPoint> data;
-  vector<DataPoint*> byValue, byTime;
-  static void add(DataPoint value, vector<DataPoint> main, vector<DataPoint*> ref, dp_comparator lessThan) {
-    int left = 0, right = main.size() - 1;
+  vector<DataPoint> byValue, byTime;
+  static void add(DataPoint value, vector<DataPoint>& data, dp_comparator lessThan) {
+    int left = 0, right = data.size() - 1;
 
     while (left <= right) {
       int mid = (left + right) / 2;
-      DataPoint midVal = main[mid];
+      DataPoint midVal = data[mid];
 
       if (lessThan(midVal, value)) {
         left = mid + 1;
@@ -26,20 +25,19 @@ private:
       }
     }
 
-    main.push_back(value);
-    ref.insert(ref.begin() + left, &main[0]);
+    data.insert(data.begin() + left, value);
   }
 public:
-  int size() { return data.size(); }
+  int size() { return byValue.size(); }
   void add(DataPoint value) {
-    add(value, data, byValue, DataPoint::isValueLessThan);
-    add(value, data, byTime, DataPoint::isTimeLessThan);
+    add(value, byValue, DataPoint::isValueLessThan);
+    add(value, byTime, DataPoint::isTimeLessThan);
   }
   DataPoint getByTime(int i) {
-    return *byTime[i];
+    return byTime[i];
   }
   DataPoint getByValue(int i) {
-    return *byValue[i];
+    return byValue[i];
   }
 };
 
