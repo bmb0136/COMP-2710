@@ -42,5 +42,10 @@
       main = "main.cpp";
       src = ./src/project3;
     };
+    packages.project4 = mkCppApp {
+      name = "project4";
+      main = "main.cpp";
+      src = ./src/project4;
+    };
   });
 }
