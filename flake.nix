@@ -26,7 +26,7 @@
       export PS1="\n[\e[1;32m\[nix develop:\w]\$\e[0m "
       '';
     };
-    packages.default = self.packages.${system}.project3;
+    packages.default = self.packages.${system}.project4;
     packages.project1 = mkCppApp {
       name = "project1";
       main = "project1_Buckley_bmb0136.cpp";
