@@ -15,9 +15,11 @@ enum AnswerResult {
 class Question {
 private:
   string prompt;
+  float points;
 public:
-  Question(string prompt) {
+  Question(string prompt, float points) {
     this->prompt = prompt;
+    this->points = points;
   }
 public:
   AnswerResult ask(int questionNumber) {
@@ -60,25 +62,39 @@ class TFQuestion : public Question {
 private:
   bool answer;
 public:
-  TFQuestion(string prompt, bool answer) : Question(prompt) {
+  TFQuestion(string prompt, bool answer, float points) : Question(prompt, points) {
     this->answer = answer;
   }
   AnswerResult checkAnswer(string answer) override {
-    bool isTrue = StringUtils::compareIgnoreCase(answer, "t") || StringUtils::compareIgnoreCase(answer, "true");
-    bool isFalse = StringUtils::compareIgnoreCase(answer, "f") || StringUtils::compareIgnoreCase(answer, "false");
-    if (isTrue) {
-      return this->answer ? AR_CORRECT : AR_INCORRECT;
+    bool parsed;
+    if (!StringUtils::tryParseBool(answer, parsed)) {
+      return AR_INVALID;
     }
-    if (isFalse) {
-      return this->answer ? AR_INCORRECT : AR_CORRECT;
-    }
-    return AR_INVALID;
+    return parsed == this->answer ? AR_CORRECT : AR_INCORRECT;
   }
   string getAnswer() override {
     return this->answer ? "true" : "false";
   }
   string getPromptHint() override {
     return " [true/false]";
+  }
+};
+
+class WRQuestion : public Question {
+private:
+  string answer;
+public:
+  WRQuestion(string prompt, string answer, float points) : Question(prompt, points) {
+    this->answer = answer;
+  }
+  string getPromptHint() override {
+    return "";
+  }
+  string getAnswer() override {
+    return this->answer;
+  }
+  AnswerResult checkAnswer(string answer) override {
+    return StringUtils::compareIgnoreCase(answer, this->answer) ? AR_CORRECT : AR_INCORRECT;
   }
 };
 
