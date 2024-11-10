@@ -48,7 +48,7 @@ int main() {
     cout << "=== SESSION LOG ===" << endl;
     cout << "Correct answers: " << results.correct << "/" << quiz.size() << endl;
     cout.precision(2);
-    cout << "Final score: " << fixed << results.points << "/" << quiz.totalPoints() << endl << endl;
+    cout << "Final score: " << results.points << "/" << quiz.totalPoints() << endl << endl;
   }
 
   cout << "*** Thank you for using the testing service. Goodbye! ***" << endl;
