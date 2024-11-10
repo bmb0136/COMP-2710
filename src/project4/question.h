@@ -33,7 +33,7 @@ public:
     bool run = true;
     AnswerResult result;
     while (run) {
-      cout << prompt << getPromptHint() << ": ";
+      cout << "Your answer" << getPromptHint() << ": ";
       string input;
       cin >> input;
       cout << endl;

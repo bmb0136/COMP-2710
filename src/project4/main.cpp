@@ -51,7 +51,7 @@ int main() {
     cout << "Final score: " << fixed << results.points << "/" << quiz.totalPoints() << endl << endl;
   }
 
-  cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;
+  cout << "*** Thank you for using the testing service. Goodbye! ***" << endl;
   return 0;
 }
 
