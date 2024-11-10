@@ -20,6 +20,7 @@ public:
   void add(Question* q) {
     if (count == 0) {
       count = 1;
+      head = new Node(q);
       return;
     }
     Node* current = head;
@@ -29,6 +30,7 @@ public:
       current = current->next;
     }
     prev->next = new Node(q);
+    count++;
   }
   int size() {
     return count;
@@ -46,6 +48,15 @@ public:
       i--;
     }
     return current ? current->question : nullptr;
+  }
+  float totalPoints() {
+    Node* current = head;
+    float sum = 0.0f;
+    while (current) {
+      sum += current->question->getPoints();
+      current = current->next;
+    }
+    return sum;
   }
 };
 
