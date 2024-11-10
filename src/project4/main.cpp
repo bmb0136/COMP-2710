@@ -40,6 +40,10 @@ int main() {
   }
   cout << endl;
 
+  cout << "=== SESSION LOG ===" << endl;
+  cout << "Total questions: " << quiz.size() << endl;
+  cout << "Total point values: " << quiz.totalPoints() << endl;
+
   if (take) {
     QuizResults results = takeQuiz(quiz);
 
