@@ -1,18 +1,18 @@
 #include "question_factory.h"
+#include "quiz.h"
 #include <iostream>
 
 using namespace std;
 
-int main() {
-  cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
-
+Quiz createQuiz() {
+  Quiz quiz;
   int questionNum = 1;
   bool repeat = true;
   while (repeat) {
     Question* q = QuestionFactory::create();
 
     if (q) {
-      // TODO: quiz.add(q)
+      quiz.add(q);
       cout << "Question saved. ";
     } else {
       cout << "Question not saved. ";
@@ -34,6 +34,13 @@ int main() {
       cout << "[Command not recognized, please try again!]" << endl << endl;
     }
   }
+  return quiz;
+}
+
+int main() {
+  cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
+
+  Quiz quiz = createQuiz();
 
   cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;
   return 0;
