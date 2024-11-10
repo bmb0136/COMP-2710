@@ -33,6 +33,20 @@ public:
   int size() {
     return count;
   }
+  Question* get(int i) {
+    if (i < 0 || i >= count) {
+      return nullptr;
+    }
+    Node* current = head;
+    while (i > 0) {
+      if (!current) {
+        return nullptr;
+      }
+      current = current->next;
+      i--;
+    }
+    return current ? current->question : nullptr;
+  }
 };
 
 #endif
