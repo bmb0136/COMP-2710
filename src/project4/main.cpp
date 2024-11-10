@@ -1,30 +1,38 @@
+#include "question_factory.h"
 #include <iostream>
-#include "string_util.h"
 
 using namespace std;
 
 int main() {
   cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
 
-  string response;
-  int type;
-  while (true) {
-    response.clear();
-    cout << "Type of question [mcq/tf/wr]: ";
-    cin >> response;
-    if (StringUtils::compareIgnoreCase(response, "mcq")) {
-      type = 1;
-      break;
+  int questionNum = 1;
+  bool repeat = true;
+  while (repeat) {
+    Question* q = QuestionFactory::create();
+
+    if (q) {
+      // TODO: quiz.add(q)
+      cout << "Question saved. ";
+    } else {
+      cout << "Question not saved. ";
     }
-    if (StringUtils::compareIgnoreCase(response, "tf")) {
-      type = 2;
-      break;
+
+    string yn;
+    while (true) {
+      cout << "Continue? [y/n]: ";
+      cin >> yn;
+      if (yn == "y") {
+        questionNum++;
+        cout << endl;
+        break;
+      }
+      if (yn == "n") {
+        repeat = false;
+        break;
+      }
+      cout << "[Command not recognized, please try again!]" << endl << endl;
     }
-    if (StringUtils::compareIgnoreCase(response, "wr")) {
-      type = 3;
-      break;
-    }
-    cout << "[Command not recognized, please try again!]" << endl << endl;
   }
 
   cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;

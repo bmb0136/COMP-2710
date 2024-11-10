@@ -75,6 +75,7 @@ private:
       }
       mcq_numChoices++;
     }
+    cout << endl;
 
     string ans;
     while (true) {
@@ -89,6 +90,7 @@ private:
       }
       cout << "[Answer not recognized, please try again!]" << endl << endl;
     }
+    cout << endl;
 
     return true;
   }
@@ -98,6 +100,7 @@ public:
     if (!tryGetQuestionType(type)) {
       return nullptr;
     }
+    cout << endl;
 
     string prompt;
     cout << "Enter a question: ";
@@ -118,21 +121,21 @@ public:
         }
         break;
       case TRUE_FALSE:
-        cout << endl;
         while (true) {
           cout << "Select correct answer: ";
           string tf_input;
           cin >> tf_input;
           if (StringUtils::tryParseBool(tf_input, tf_answer)) {
+            cout << endl;
             break;
           }
           cout << "[Answer not recognized, please try again!]" << endl << endl;
         }
         break;
       case WRITTEN:
-        cout << endl;
         cout << "Type correct answer: ";
         cin >> wr_answer;
+        cout << endl;
         break;
     }
 
@@ -140,7 +143,9 @@ public:
     while (true) {
       string pts_input;
       cout << "Enter point value: ";
+      cin >> pts_input;
       if (StringUtils::tryParseFloat(pts_input, points, 0, INFINITY) && points != 0) {
+        cout << endl;
         break;
       }
       cout << "[Not a point value, please try again!]" << endl << endl;
@@ -148,7 +153,7 @@ public:
 
     switch (type) {
       case MULTIPLE_CHOICE:
-        break;
+        return new MCQQuestion(prompt, points, mcq_answer, mcq_numChoices, mcq_a, mcq_b, mcq_c, mcq_d, mcq_e);
       case TRUE_FALSE:
         return new TFQuestion(prompt, points, tf_answer);
       case WRITTEN:

@@ -1,7 +1,9 @@
 #ifndef STRING_UTIL_H
 #define STRING_UTIL_H
+#include <sstream>
 #include <string>
 using std::string;
+using std::stringstream;
 
 class StringUtils {
 public:
@@ -15,6 +17,27 @@ public:
       }
     }
     return true;
+  }
+  static bool tryParseFloat(string input, float& out, float min, float max) {
+    stringstream stream(input);
+    stream >> out;
+    if (stream.fail()) {
+      return false;
+    }
+    return out >= min && out <= max;
+  }
+  static bool tryParseBool(string input, bool& out) {
+    bool isTrue = StringUtils::compareIgnoreCase(input, "t") || StringUtils::compareIgnoreCase(input, "true");
+    bool isFalse = StringUtils::compareIgnoreCase(input, "f") || StringUtils::compareIgnoreCase(input, "false");
+    if (isTrue) {
+      out = true;
+      return true;
+    }
+    if (isFalse) {
+      out = false;
+      return true;
+    }
+    return false;
   }
 };
 
