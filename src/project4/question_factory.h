@@ -34,12 +34,12 @@ private:
         out = WRITTEN;
         return true;
       }
-      cout << "[Command not recognized, please try again!]" << endl << endl;
+      cout << "[Command not recognized, please try again!]" << endl;
     }
     return false;
   }
   static bool tryGetMCQAnswers(int& mcq_numChoices, int& mcq_answer, string& mcq_a, string& mcq_b, string& mcq_c, string& mcq_d, string& mcq_e) {
-    cout << "[At any time, type 'quit()' to exit]" << endl << endl;
+    cout << "[At any time, type 'quit()' to exit]" << endl;
     while (mcq_numChoices < 5) {
       char letter = (char)(mcq_numChoices + 'A');
       cout << "Enter choice " << letter << ": ";
@@ -74,7 +74,6 @@ private:
       }
       mcq_numChoices++;
     }
-    cout << endl;
 
     string ans;
     while (true) {
@@ -89,7 +88,6 @@ private:
       }
       cout << "[Answer not recognized, please try again!]" << endl << endl;
     }
-    cout << endl;
 
     return true;
   }
@@ -99,12 +97,10 @@ public:
     if (!tryGetQuestionType(type)) {
       return nullptr;
     }
-    cout << endl;
 
     string prompt;
     cout << "Enter a question: ";
     cin >> prompt;
-    cout << endl;
 
     bool tf_answer;
     string wr_answer;
@@ -125,16 +121,14 @@ public:
           string tf_input;
           cin >> tf_input;
           if (StringUtils::tryParseBool(tf_input, tf_answer)) {
-            cout << endl;
             break;
           }
-          cout << "[Answer not recognized, please try again!]" << endl << endl;
+          cout << "[Answer not recognized, please try again!]" << endl;
         }
         break;
       case WRITTEN:
         cout << "Type correct answer: ";
         cin >> wr_answer;
-        cout << endl;
         break;
     }
 
@@ -144,17 +138,16 @@ public:
       cout << "Enter point value: ";
       cin >> pts_input;
       if (StringUtils::tryParseFloat(pts_input, points, 0, INFINITY) && points != 0) {
-        cout << endl;
         break;
       }
-      cout << "[Not a point value, please try again!]" << endl << endl;
+      cout << "[Not a point value, please try again!]" << endl;
     }
 
     switch (type) {
       case MULTIPLE_CHOICE:
         return new MCQQuestion(prompt, points, mcq_answer, mcq_numChoices, mcq_a, mcq_b, mcq_c, mcq_d, mcq_e);
       case TRUE_FALSE:
-        return new TFQuestion(prompt, points, tf_answer);
+        return new TFQuestion(prompt, tf_answer, points);
       case WRITTEN:
         return new WRQuestion(prompt, wr_answer, points);
     }
