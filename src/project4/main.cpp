@@ -20,6 +20,10 @@ int main() {
 
   Quiz quiz = createQuiz();
 
+  cout << "=== SESSION LOG ===" << endl;
+  cout << "Total questions: " << quiz.size() << endl;
+  cout << "Total point values: " << quiz.totalPoints() << endl;
+
   bool take;
   string yn;
   while (true) {
@@ -39,10 +43,6 @@ int main() {
     cout << "[Command not recognized, please try again!]" << endl << endl;
   }
   cout << endl;
-
-  cout << "=== SESSION LOG ===" << endl;
-  cout << "Total questions: " << quiz.size() << endl;
-  cout << "Total point values: " << quiz.totalPoints() << endl;
 
   if (take) {
     QuizResults results = takeQuiz(quiz);
