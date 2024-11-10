@@ -23,6 +23,7 @@ int main() {
   cout << "=== SESSION LOG ===" << endl;
   cout << "Total questions: " << quiz.size() << endl;
   cout << "Total point values: " << quiz.totalPoints() << endl;
+  cout << endl;
 
   bool take;
   string yn;
