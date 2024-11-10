@@ -3,6 +3,7 @@
 
 #include "string_util.h"
 #include <iostream>
+#include <sstream>
 #include <string>
 using namespace std;
 
@@ -23,12 +24,13 @@ public:
   }
 public:
   AnswerResult ask(int questionNumber) {
-    cout << "Question " << questionNumber << ": " << prompt << endl << endl;
-    cout << prompt << getPromptHint() << ": ";
+    cout << "Question " << questionNumber << ": " << prompt << endl;
+    cout << getSubprompt() << endl;
 
     bool run = true;
     AnswerResult result;
     while (run) {
+      cout << prompt << getPromptHint() << ": ";
       string input;
       cin >> input;
       cout << endl;
@@ -53,9 +55,14 @@ public:
     return result;
   }
 protected:
-  virtual string getPromptHint() = 0;
+  virtual string getPromptHint() {
+    return "";
+  }
   virtual string getAnswer() = 0;
   virtual AnswerResult checkAnswer(string answer) = 0;
+  virtual string getSubprompt() {
+    return "";
+  }
 };
 
 class TFQuestion : public Question {
@@ -87,14 +94,82 @@ public:
   WRQuestion(string prompt, string answer, float points) : Question(prompt, points) {
     this->answer = answer;
   }
-  string getPromptHint() override {
-    return "";
-  }
   string getAnswer() override {
     return this->answer;
   }
   AnswerResult checkAnswer(string answer) override {
     return StringUtils::compareIgnoreCase(answer, this->answer) ? AR_CORRECT : AR_INCORRECT;
+  }
+};
+
+class MCQQuestion : public Question {
+private:
+  string a, b, c, d, e;
+  int answerIndex, numChoices;
+public:
+  MCQQuestion(string prompt, float points, int answerIndex, int numChoices,
+              string a, string b, string c, string d, string e) : Question(prompt, points) {
+    this->a = a;
+    if (numChoices >= 2) {
+      this->b = b;
+    }
+    if (numChoices >= 3) {
+      this->c = c;
+    }
+    if (numChoices >= 4) {
+      this->d = d;
+    }
+    if (numChoices >= 5) {
+      this->e = e;
+    }
+    this->answerIndex = answerIndex;
+    this->numChoices = numChoices;
+  }
+  string getAnswer() override {
+    switch (answerIndex) {
+      case 0:
+        return "A";
+      case 1:
+        return "B";
+      case 2:
+        return "C";
+      case 3:
+        return "D";
+      case 4:
+        return "E";
+      default:
+        return "?";
+    }
+  }
+  AnswerResult checkAnswer(string answer) override {
+    if (answer.length() != 1) {
+      return AR_INVALID;
+    }
+    // 4X = uppercase
+    // 6X = lowercase
+    // Mask out 2 bit to make 6X -> 4X
+    int index = (answer[0] & ~0b00100000) - 'A';
+    if (index < 0 || index >= numChoices) {
+      return AR_INVALID;
+    }
+    return index == answerIndex ? AR_CORRECT : AR_INCORRECT;
+  }
+  string getSubprompt() override {
+    stringstream ss;
+    ss << "  A. " << a << endl;
+    if (numChoices >= 2) {
+      ss << "  B. " << b << endl;
+    }
+    if (numChoices >= 3) {
+      ss << "  C. " << c << endl;
+    }
+    if (numChoices >= 4) {
+      ss << "  D. " << d << endl;
+    }
+    if (numChoices >= 5) {
+      ss << "  E. " << e << endl;
+    }
+    return ss.str();
   }
 };
 
