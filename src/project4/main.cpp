@@ -1,8 +1,64 @@
+#include "question.h"
 #include "question_factory.h"
 #include "quiz.h"
 #include <iostream>
 
 using namespace std;
+
+Quiz createQuiz(); 
+
+struct QuizResults {
+public:
+  int correct;
+  float points;
+};
+
+QuizResults takeQuiz(Quiz quiz);
+
+int main() {
+  cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
+
+  Quiz quiz = createQuiz();
+
+  bool take;
+  string yn;
+  while (true) {
+    cout << "/!\\ Begin assessment? [y/n]: ";
+    cin >> yn;
+
+    char c = yn.length() == 1 ? yn[0] : 0;
+    c &= 0b00100000;
+    if (c == 'N') {
+      take = false;
+      break;
+    }
+    if (c == 'Y') {
+      take = true;
+      break;
+    }
+    cout << "[Command not recognized, please try again!]" << endl << endl;
+  }
+  cout << endl;
+
+  QuizResults results = takeQuiz(quiz);
+
+  cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;
+  return 0;
+}
+
+QuizResults takeQuiz(Quiz quiz) {
+  QuizResults result = { 0 };
+
+  for (int i = 0; i < quiz.size(); i++) {
+    Question* q = quiz.get(i);
+    if (q->ask(i + 1) == AR_CORRECT) {
+      result.correct++;
+      result.points += q->getPoints();
+    }
+  }
+
+  return result;
+}
 
 Quiz createQuiz() {
   Quiz quiz;
@@ -35,13 +91,4 @@ Quiz createQuiz() {
     }
   }
   return quiz;
-}
-
-int main() {
-  cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
-
-  Quiz quiz = createQuiz();
-
-  cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;
-  return 0;
 }

@@ -23,6 +23,9 @@ public:
     this->points = points;
   }
 public:
+  float getPoints() {
+    return points;
+  }
   AnswerResult ask(int questionNumber) {
     cout << "Question " << questionNumber << ": " << prompt << endl;
     cout << getSubprompt() << endl;
