@@ -15,7 +15,6 @@ private:
   };
   static bool tryGetQuestionType(QuestionType& out) {
     string response;
-    int type;
     while (true) {
       response.clear();
       cout << "Type of question [mcq/tf/wr]: ";
