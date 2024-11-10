@@ -28,7 +28,10 @@ public:
   }
   AnswerResult ask(int questionNumber) {
     cout << "Question " << questionNumber << ": " << prompt << endl;
-    cout << getSubprompt() << endl;
+    string subPrompt = getSubprompt();
+    if (subPrompt.length() > 0) {
+      cout << subPrompt << endl;
+    }
 
     bool run = true;
     AnswerResult result;
@@ -36,7 +39,6 @@ public:
       cout << "Your answer" << getPromptHint() << ": ";
       string input;
       cin >> input;
-      cout << endl;
 
       result = checkAnswer(input);
 
@@ -50,7 +52,7 @@ public:
           run = false;
           break;
         default:
-          cout << "[Answer not recognized, please try again!]" << endl << endl;
+          cout << "[Answer not recognized, please try again!]" << endl;
           break;
       }
     }
