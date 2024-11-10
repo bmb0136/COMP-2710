@@ -40,7 +40,16 @@ int main() {
   }
   cout << endl;
 
-  QuizResults results = takeQuiz(quiz);
+  if (take) {
+    QuizResults results = takeQuiz(quiz);
+
+    cout << "/!\\ Assessment Complete." << endl << endl;
+
+    cout << "=== SESSION LOG ===" << endl;
+    cout << "Correct answers: " << results.correct << "/" << quiz.size() << endl;
+    cout.precision(2);
+    cout << "Final score: " << fixed << results.points << "/" << quiz.totalPoints() << endl << endl;
+  }
 
   cout << endl << "*** Thank you for using the testing service. Goodbye! ***" << endl;
   return 0;
