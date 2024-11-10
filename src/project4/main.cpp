@@ -27,7 +27,7 @@ int main() {
     cin >> yn;
 
     char c = yn.length() == 1 ? yn[0] : 0;
-    c &= 0b00100000;
+    c &= ~0b00100000;
     if (c == 'N') {
       take = false;
       break;
@@ -94,6 +94,7 @@ Quiz createQuiz() {
       }
       if (yn == "n") {
         repeat = false;
+        cout << endl;
         break;
       }
       cout << "[Command not recognized, please try again!]" << endl << endl;
