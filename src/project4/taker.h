@@ -14,7 +14,7 @@ public:
 public:
   void print(int number) {
     cout << "  Question " << number << ": " << question->getAnswer() << endl;
-    cout << "  Your answer: " << answer->input << endl;
+    cout << "  Your answer: " << (answer ? answer->input : "N/A") << endl;
   }
 };
 
@@ -72,8 +72,10 @@ public:
 
     _TakerNode* n = head;
     while (n) {
-      correct += n->answer->correct ? 1 : 0;
-      points += n->answer->pointsGained;
+      if (n->answer) {
+        correct += n->answer->correct ? 1 : 0;
+        points += n->answer->pointsGained;
+      }
       total += n->question->getPoints();
       n = n->next;
     }
@@ -135,8 +137,27 @@ public:
       switch (choice) {
         case 1:
           if (!result.isDone()) {
-            cout << "[You have not answered all questions!]" << endl;
-            break;
+            string yn;
+            bool end;
+            while (true) {
+              cout << "End assessment early? [y/n]: ";
+              getline(cin, yn);
+
+              char c = yn.length() == 1 ? yn[0] : 0;
+              c &= ~0b00100000;
+              if (c == 'N') {
+                end = false;
+                break;
+              }
+              if (c == 'Y') {
+                end = true;
+                break;
+              }
+              cout << "[Command not recognized, please try again!]" << endl << endl;
+            }
+            if (!end) {
+              break;
+            }
           }
           return result;
         case 2:
