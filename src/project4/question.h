@@ -122,6 +122,7 @@ public:
             if (input.length() > 0) {
               prompt = input;
               cout << "Question saved." << endl;
+              print = true;
               break;
             }
             cout << "[Please enter a question!]" << endl;
@@ -138,6 +139,7 @@ public:
             if (StringUtils::tryParseFloat(input, x, 0, INFINITY) && x > 0) {
               points = x;
               cout << "Question saved." << endl;
+              print = true;
               break;
             }
             cout << "[Point value not recognized, please try again!]" << endl;
@@ -146,11 +148,13 @@ public:
         case 4:
           if (editAnswer()) {
             cout << "Question saved." << endl;
+            print = true;
           }
           break;
         case 5:
           if (hasExtra && editExtraAnswer()) {
             cout << "Question saved." << endl;
+            print = true;
           }
           break;
       }
