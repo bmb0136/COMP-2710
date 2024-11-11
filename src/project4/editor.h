@@ -88,6 +88,17 @@ private:
       quiz.replaceAt(number - 1, replacement);
     }
   }
+  static void deleteQuestion(Quiz& quiz) {
+    if (quiz.size() < 1) {
+      cout << "[Please create a question first!]" << endl;
+      return;
+    }
+    int number;
+    if (getQuestion(quiz, number)) {
+      quiz.deleteAt(number - 1);
+      cout << "Question " << number << " deleted";
+    }
+  }
 public:
   static Quiz createQuiz() {
     Quiz quiz;
@@ -106,6 +117,8 @@ public:
           cout << endl;
           break;
         case DELETE:
+          deleteQuestion(quiz);
+          cout << endl;
           break;
         case FINISH:
           return quiz;
