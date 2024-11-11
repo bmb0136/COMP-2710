@@ -1,14 +1,9 @@
-#include "question.h"
-#include "question_factory.h"
-#include "quiz.h"
+#include "editor.h"
 #include <iostream>
 
 using namespace std;
 
-Quiz createQuiz(); 
-
-struct QuizResults {
-public:
+struct QuizResults { public:
   int correct;
   float points;
 };
@@ -18,7 +13,7 @@ QuizResults takeQuiz(Quiz quiz);
 int main() {
   cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
 
-  Quiz quiz = createQuiz();
+  Quiz quiz = QuizEditor::createQuiz();
 
   cout << "=== SESSION LOG ===" << endl;
   cout << "Total questions: " << quiz.size() << endl;
@@ -72,38 +67,4 @@ QuizResults takeQuiz(Quiz quiz) {
   }
 
   return result;
-}
-
-Quiz createQuiz() {
-  Quiz quiz;
-  int questionNum = 1;
-  bool repeat = true;
-  while (repeat) {
-    Question* q = QuestionFactory::create();
-
-    if (q) {
-      quiz.add(q);
-      cout << "Question saved. ";
-    } else {
-      cout << "Question not saved. ";
-    }
-
-    string yn;
-    while (true) {
-      cout << "Continue? [y/n]: ";
-      cin >> yn;
-      if (yn == "y") {
-        questionNum++;
-        cout << endl;
-        break;
-      }
-      if (yn == "n") {
-        repeat = false;
-        cout << endl;
-        break;
-      }
-      cout << "[Command not recognized, please try again!]" << endl << endl;
-    }
-  }
-  return quiz;
 }
