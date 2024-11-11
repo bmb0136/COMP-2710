@@ -4,6 +4,7 @@
 #include "question.h"
 #include "question_factory.h"
 #include "quiz.h"
+#include "string_util.h"
 
 class QuizEditor {
 private:
@@ -53,6 +54,40 @@ private:
       cout << "Question not saved." << endl;
     }
   }
+  static Question* getQuestion(Quiz& quiz, int& number) {
+    string input;
+    while (true) {
+      cout << "Select a question to edit, or type quit() [1-" << quiz.size() << "]: ";
+      getline(cin, input);
+
+      if (StringUtils::compareIgnoreCase(input, "quit()")) {
+        return nullptr;
+      }
+
+      if (!StringUtils::tryParseInt(input, number, 1, quiz.size())) {
+        cout << "[That question does not exist!]" << endl;
+        continue;
+      }
+
+      return quiz.get(number - 1);
+    }
+  }
+  static void editQuestion(Quiz& quiz) {
+    if (quiz.size() < 1) {
+      cout << "[Please create a question first!]" << endl;
+      return;
+    }
+    int number;
+    Question* q = getQuestion(quiz, number);
+    if (!q) {
+      return;
+    }
+
+    Question* replacement = q->edit(number);
+    if (q != replacement) {
+      quiz.replaceAt(number - 1, q);
+    }
+  }
 public:
   static Quiz createQuiz() {
     Quiz quiz;
@@ -67,6 +102,8 @@ public:
           cout << endl;
           break;
         case EDIT:
+          editQuestion(quiz);
+          cout << endl;
           break;
         case DELETE:
           break;

@@ -60,15 +60,20 @@ public:
 
     return result;
   }
+  virtual string getType() = 0;
+  string getPrompt() {
+    return prompt;
+  }
+  virtual string getSubprompt() {
+    return "";
+  }
+  virtual Question* edit(int number) = 0;
 protected:
   virtual string getPromptHint() {
     return "";
   }
   virtual string getAnswer() = 0;
   virtual AnswerResult checkAnswer(string answer) = 0;
-  virtual string getSubprompt() {
-    return "";
-  }
 };
 
 class TFQuestion : public Question {
