@@ -24,7 +24,7 @@ int main() {
   string yn;
   while (true) {
     cout << "/!\\ Begin assessment? [y/n]: ";
-    cin >> yn;
+    getline(cin, yn);
 
     char c = yn.length() == 1 ? yn[0] : 0;
     c &= ~0b00100000;

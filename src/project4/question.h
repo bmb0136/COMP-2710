@@ -39,7 +39,7 @@ public:
     while (run) {
       cout << "Your answer" << getPromptHint() << ": ";
       string input;
-      cin >> input;
+      getline(cin, input);
 
       result = checkAnswer(input);
 

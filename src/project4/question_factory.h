@@ -18,7 +18,7 @@ private:
     while (true) {
       response.clear();
       cout << "Type of question [mcq/tf/wr]: ";
-      cin >> response;
+      getline(cin, response);
       if (StringUtils::compareIgnoreCase(response, "quit")) {
         break;
       }
@@ -45,7 +45,7 @@ private:
       cout << "Enter choice " << letter << ": ";
 
       string mcq_input;
-      cin >> mcq_input;
+      getline(cin, mcq_input);
 
       if (StringUtils::compareIgnoreCase("quit()", mcq_input)) {
         if (mcq_numChoices < 1) {
@@ -78,7 +78,7 @@ private:
     string ans;
     while (true) {
       cout << "Select correct answer: ";
-      cin >> ans;
+      getline(cin, ans);
       int index = ans.length() > 0 ? ans[0] : 0;
       index &= ~0b00100000;
       index -= 'A';
@@ -100,7 +100,7 @@ public:
 
     string prompt;
     cout << "Enter a question: ";
-    cin >> prompt;
+    getline(cin, prompt);
 
     bool tf_answer;
     string wr_answer;
@@ -119,7 +119,7 @@ public:
         while (true) {
           cout << "Select correct answer: ";
           string tf_input;
-          cin >> tf_input;
+          getline(cin, tf_input);
           if (StringUtils::tryParseBool(tf_input, tf_answer)) {
             break;
           }
@@ -128,7 +128,7 @@ public:
         break;
       case WRITTEN:
         cout << "Type correct answer: ";
-        cin >> wr_answer;
+        getline(cin, wr_answer);
         break;
     }
 
@@ -136,7 +136,7 @@ public:
     while (true) {
       string pts_input;
       cout << "Enter point value: ";
-      cin >> pts_input;
+      getline(cin, pts_input);
       if (StringUtils::tryParseFloat(pts_input, points, 0, INFINITY) && points != 0) {
         break;
       }
