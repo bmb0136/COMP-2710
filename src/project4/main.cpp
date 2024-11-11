@@ -3,6 +3,7 @@
 #include "quiz.h"
 #include "string_util.h"
 #include "taker.h"
+#include <cmath>
 #include <iostream>
 
 using namespace std;
@@ -70,6 +71,56 @@ void testStringCompare() {
   assert(!StringUtils::compareIgnoreCase("ABC", "xyz"));
 }
 
+// Tests StringUtils::tryParseFloat/Int
+void testNumParse() {
+  float x;
+  int y;
+
+  cout << "Case 1: Invalid";
+  assert(!StringUtils::tryParseFloat("asd", x, 0, 0));
+  assert(!StringUtils::tryParseInt("asd", y, 0, 0));
+
+  cout << "Case 2: Floats" << endl;
+  assert(StringUtils::tryParseFloat("1.5", x, 0, 10));
+  assert(fabs(x - 1.5f) < 0.01);
+  assert(!StringUtils::tryParseFloat("1.5", x, -10, 0));
+  assert(StringUtils::tryParseFloat("-1.5", x, -10, 0));
+  assert(fabs(x - -1.5f) < 0.01);
+  assert(!StringUtils::tryParseFloat("-1.5", x, 0, 10));
+
+  cout << "Case 3: Ints" << endl;
+  assert(StringUtils::tryParseInt("15", y, 0, 20));
+  assert(y == 15);
+  assert(!StringUtils::tryParseInt("15", y, -20, 0));
+  assert(StringUtils::tryParseInt("-15", y, -20, 0));
+  assert(y == -15);
+  assert(!StringUtils::tryParseInt("-15", y, 0, 20));
+}
+
+// Tests StringUtils::tryParseBool
+void testBoolParse() {
+  bool x;
+  cout << "Case 1: shorthand" << endl;
+  assert(StringUtils::tryParseBool("t", x));
+  assert(x);
+  assert(StringUtils::tryParseBool("T", x));
+  assert(x);
+  assert(StringUtils::tryParseBool("f", x));
+  assert(!x);
+  assert(StringUtils::tryParseBool("F", x));
+  assert(!x);
+
+  cout << "Case 2: full" << endl;
+  assert(StringUtils::tryParseBool("true", x));
+  assert(x);
+  assert(StringUtils::tryParseBool("TRUE", x));
+  assert(x);
+  assert(StringUtils::tryParseBool("false", x));
+  assert(!x);
+  assert(StringUtils::tryParseBool("FALSE", x));
+  assert(!x);
+}
+
 int main() {
   cout << "*** This is the debug version ***" << endl << endl;
   
@@ -80,6 +131,12 @@ int main() {
   cout << endl;
 
   testStringCompare();
+  cout << endl;
+
+  testNumParse();
+  cout << endl;
+
+  testBoolParse();
   cout << endl;
 
   cout << "*** End of the debug version ***" << endl << endl;
