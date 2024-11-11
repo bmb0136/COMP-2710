@@ -71,16 +71,16 @@ public:
     return "";
   }
   Question* edit(int number, Question* (*factory)()) {
-    cout << "=== QUESTION " << number << " SAVED VALUES ===" << endl;
-    cout << "  1. Type*: " << getType() << endl;
-    cout << "  2. Question: " << prompt << endl;
-    cout.precision(2);
-    cout << "  3. Points: " << points << endl;
-    cout << "  4. Answer: " << getAnswer() << endl;
-    bool hasExtra = printExtraEditOption();
-    cout << "* Editing question type will replace question" << endl;
-
     while (true) {
+      cout << "=== QUESTION " << number << " SAVED VALUES ===" << endl;
+      cout << "  1. Type*: " << getType() << endl;
+      cout << "  2. Question: " << prompt << endl;
+      cout.precision(2);
+      cout << "  3. Points: " << points << endl;
+      cout << "  4. Answer: " << getAnswer() << endl;
+      bool hasExtra = printExtraEditOption();
+      cout << "* Editing question type will replace question" << endl;
+
       string input;
       int action;
       while (true) {
