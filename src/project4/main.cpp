@@ -4,7 +4,13 @@
 
 using namespace std;
 
+#define UNIT_TESTING
+
 int main() {
+#ifdef UNIT_TESTING
+  cout << "*** This is the debug version ***" << endl << endl;
+  return 0;
+#endif
   cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
 
   Quiz quiz = QuizEditor::createQuiz();
@@ -36,14 +42,15 @@ int main() {
 
   if (take) {
     QuizResult score = QuizTaker::take(quiz);
+    cout << endl;
 
     cout << "/!\\ Assessment Complete." << endl << endl;
 
     cout << "=== SESSION LOG ===" << endl;
     score.print();
+    cout << endl;
   }
 
   cout << "*** Thank you for using the testing service. Goodbye! ***" << endl;
   return 0;
 }
-
