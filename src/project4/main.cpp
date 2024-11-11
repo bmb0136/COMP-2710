@@ -8,8 +8,6 @@
 
 using namespace std;
 
-#define UNIT_TESTING
-
 #ifdef UNIT_TESTING
 #include <cassert>
 
