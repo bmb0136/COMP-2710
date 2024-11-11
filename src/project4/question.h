@@ -316,7 +316,92 @@ public:
   }
   bool printExtraEditOption() override {
     cout << "  4. Answer choices" << endl;
-    cout << getSubprompt();
+    cout << "    A. " << a << endl;
+    if (numChoices >= 2) {
+      cout << "    B. " << b << endl;
+    }
+    if (numChoices >= 3) {
+      cout << "    C. " << c << endl;
+    }
+    if (numChoices >= 4) {
+      cout << "    D. " << d << endl;
+    }
+    if (numChoices >= 5) {
+      cout << "    E. " << e << endl;
+    }
+    return true;
+  }
+  bool editExtraAnswer() override {
+    string a, b, c, d, e;
+    int n;
+    if (!tryGetChoices(n, a, b, c, d, e)) {
+      return false;
+    }
+
+    int on = numChoices;
+    numChoices = n;
+
+    if (answerIndex >= n) {
+      cout << "Correct answer is now out of range. Please select a new correct answer" << endl;
+      if (!editAnswer()) {
+        numChoices = on;
+        return false;
+      }
+    }
+
+    this->a = a;
+    if (n >= 2) {
+      this->b = b;
+    }
+    if (n >= 3) {
+      this->c = c;
+    }
+    if (n >= 4) {
+      this->d = d;
+    }
+    if (n >= 5) {
+      this->e = e;
+    }
+
+    return true;
+  }
+private:
+  static bool tryGetChoices(int& mcq_numChoices, string& mcq_a, string& mcq_b, string& mcq_c, string& mcq_d, string& mcq_e) {
+    cout << "[At any time, type 'quit()' to exit]" << endl;
+    while (mcq_numChoices < 5) {
+      char letter = (char)(mcq_numChoices + 'A');
+      cout << "Enter choice " << letter << ": ";
+
+      string mcq_input;
+      getline(cin, mcq_input);
+
+      if (StringUtils::compareIgnoreCase("quit()", mcq_input)) {
+        if (mcq_numChoices < 1) {
+          return false;
+        } else {
+          break;
+        }
+      }
+
+      switch (mcq_numChoices) {
+        case 0:
+          mcq_a = mcq_input;
+          break;
+        case 1:
+          mcq_b = mcq_input;
+          break;
+        case 2:
+          mcq_c = mcq_input;
+          break;
+        case 3:
+          mcq_d = mcq_input;
+          break;
+        case 4:
+          mcq_e = mcq_input;
+          break;
+      }
+      mcq_numChoices++;
+    }
     return true;
   }
 };
