@@ -343,7 +343,7 @@ public:
     }
   }
   bool printExtraEditOption() override {
-    cout << "  4. Answer choices" << endl;
+    cout << "  5. Answer choices" << endl;
     cout << "    A. " << a << endl;
     if (numChoices >= 2) {
       cout << "    B. " << b << endl;
