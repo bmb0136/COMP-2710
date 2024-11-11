@@ -1,6 +1,7 @@
 #include "editor.h"
 #include "question.h"
 #include "quiz.h"
+#include "string_util.h"
 #include "taker.h"
 #include <iostream>
 
@@ -61,6 +62,14 @@ void testQuestion() {
   assert(AR_INVALID == mcq.checkAnswer("C"));
 }
 
+// Tests stringutils::comareIgnoreCase
+void testStringCompare() {
+  cout << "Case 1: compareIgnoreCase" << endl;
+  assert(StringUtils::compareIgnoreCase("a", "A"));
+  assert(StringUtils::compareIgnoreCase("true", "TrUe"));
+  assert(!StringUtils::compareIgnoreCase("ABC", "xyz"));
+}
+
 int main() {
   cout << "*** This is the debug version ***" << endl << endl;
   
@@ -68,6 +77,9 @@ int main() {
   cout << endl;
   
   testQuestion();
+  cout << endl;
+
+  testStringCompare();
   cout << endl;
 
   cout << "*** End of the debug version ***" << endl << endl;
