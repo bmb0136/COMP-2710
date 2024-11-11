@@ -66,11 +66,9 @@ public:
         case DELETE:
           break;
         case FINISH:
-          break;
+          return quiz;
       }
     }
-
-    return quiz;
   }
 };
 
