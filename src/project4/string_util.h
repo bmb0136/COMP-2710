@@ -26,6 +26,14 @@ public:
     }
     return out >= min && out <= max;
   }
+  static bool tryParseInt(string input, int& out, int min, int max) {
+    stringstream stream(input);
+    stream >> out;
+    if (stream.fail()) {
+      return false;
+    }
+    return out >= min && out <= max;
+  }
   static bool tryParseBool(string input, bool& out) {
     bool isTrue = StringUtils::compareIgnoreCase(input, "t") || StringUtils::compareIgnoreCase(input, "true");
     bool isFalse = StringUtils::compareIgnoreCase(input, "f") || StringUtils::compareIgnoreCase(input, "false");
