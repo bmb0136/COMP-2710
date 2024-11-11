@@ -1,6 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "question.h"
 #include "question_factory.h"
 #include "quiz.h"
 
@@ -39,11 +40,22 @@ private:
       }
     }
   }
+  static void createQuestion(Quiz& quiz) {
+    Question* newQuestion;
+
+    cout << "=== QUESTION " << (quiz.size() + 1) << " ===" << endl;
+    newQuestion = QuestionFactory::create();
+
+    if (newQuestion) {
+      quiz.add(newQuestion);
+      cout << "Question saved." << endl;
+    } else {
+      cout << "Question not saved." << endl;
+    }
+  }
 public:
   static Quiz createQuiz() {
     Quiz quiz;
-
-    Question* newQuestion;
 
     while (true) {
       Action action = getAction();
@@ -51,16 +63,7 @@ public:
 
       switch (action) {
         case CREATE:
-          cout << "=== QUESTION " << (quiz.size() + 1) << " ===" << endl;
-          newQuestion = QuestionFactory::create();
-
-          if (newQuestion) {
-            quiz.add(newQuestion);
-            cout << "Question saved." << endl;
-          } else {
-            cout << "Question not saved." << endl;
-          }
-
+          createQuestion(quiz);
           cout << endl;
           break;
         case EDIT:
