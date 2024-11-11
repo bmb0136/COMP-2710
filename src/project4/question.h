@@ -170,7 +170,6 @@ public:
     }
   }
   virtual string getAnswer() = 0;
-protected:
   virtual bool editAnswer() = 0;
   virtual bool editExtraAnswer() {
     return false;

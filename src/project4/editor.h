@@ -121,6 +121,10 @@ public:
           cout << endl;
           break;
         case FINISH:
+          if (quiz.size() < 1) {
+            cout << "[Quiz must have at least 1 question!]" << endl;
+            break;
+          }
           return quiz;
       }
     }
