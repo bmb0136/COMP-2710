@@ -68,6 +68,20 @@ public:
     delete current;
     count--;
   }
+  void replaceAt(int i, Question* q) {
+    if (i < 0 || i >= count) {
+      return;
+    }
+
+    Node* current = head;
+    while (i > 0) {
+      current = current->next;
+      i--;
+    }
+
+    delete current->question;
+    current->question = q;
+  }
   Question* get(int i) {
     if (i < 0 || i >= count) {
       return nullptr;
