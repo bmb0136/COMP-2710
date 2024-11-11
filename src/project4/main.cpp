@@ -1,14 +1,8 @@
 #include "editor.h"
+#include "taker.h"
 #include <iostream>
 
 using namespace std;
-
-struct QuizResults { public:
-  int correct;
-  float points;
-};
-
-QuizResults takeQuiz(Quiz quiz);
 
 int main() {
   cout << "*** Welcome to Brandon's Testing Service ***" << endl << endl;
@@ -41,30 +35,15 @@ int main() {
   cout << endl;
 
   if (take) {
-    QuizResults results = takeQuiz(quiz);
+    QuizResult score = QuizTaker::take(quiz);
 
     cout << "/!\\ Assessment Complete." << endl << endl;
 
     cout << "=== SESSION LOG ===" << endl;
-    cout << "Correct answers: " << results.correct << "/" << quiz.size() << endl;
-    cout.precision(2);
-    cout << "Final score: " << results.points << "/" << quiz.totalPoints() << endl << endl;
+    score.print();
   }
 
   cout << "*** Thank you for using the testing service. Goodbye! ***" << endl;
   return 0;
 }
 
-QuizResults takeQuiz(Quiz quiz) {
-  QuizResults result = { 0 };
-
-  for (int i = 0; i < quiz.size(); i++) {
-    Question* q = quiz.get(i);
-    if (q->ask(i + 1) == AR_CORRECT) {
-      result.correct++;
-      result.points += q->getPoints();
-    }
-  }
-
-  return result;
-}

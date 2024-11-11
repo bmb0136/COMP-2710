@@ -2,20 +2,21 @@
 #define QUESTION_H
 
 #include "string_util.h"
-#include <algorithm>
 #include <cmath>
-#include <cstdio>
-#include <cstdlib>
 #include <iostream>
-#include <ostream>
-#include <sstream>
-#include <string>
 using namespace std;
 
 enum AnswerResult {
   AR_INVALID,
   AR_CORRECT,
   AR_INCORRECT
+};
+
+struct Answer {
+public:
+  string input;
+  float pointsGained;
+  bool correct;
 };
 
 class Question {
@@ -32,12 +33,13 @@ public:
   float getPoints() {
     return points;
   }
-  AnswerResult ask(int questionNumber) {
-    cout << "Question " << questionNumber << ": " << prompt << endl;
+  Answer* ask() {
     string subPrompt = getSubprompt();
     if (subPrompt.length() > 0) {
       cout << subPrompt << endl;
     }
+
+    Answer* ans = new Answer();
 
     bool run = true;
     AnswerResult result;
@@ -45,17 +47,20 @@ public:
       cout << "Your answer" << getPromptHint() << ": ";
       string input;
       getline(cin, input);
+      ans->input = input;
 
       result = checkAnswer(input);
 
       switch (result) {
         case AR_CORRECT:
-          cout << "[Your answer is correct!]" << endl << endl;
           run = false;
+          ans->pointsGained = points;
+          ans->correct = true;
           break;
         case AR_INCORRECT:
-          cout << "[Your answer is incorrect! The correct answer is " << getAnswer() << "]" << endl << endl;
           run = false;
+          ans->pointsGained = 0.0f;
+          ans->correct = false;
           break;
         default:
           cout << "[Answer not recognized, please try again!]" << endl;
@@ -63,7 +68,7 @@ public:
       }
     }
 
-    return result;
+    return ans;
   }
   virtual string getType() = 0;
   string getPrompt() {
@@ -163,6 +168,7 @@ public:
       }
     }
   }
+  virtual string getAnswer() = 0;
 protected:
   virtual bool editAnswer() = 0;
   virtual bool editExtraAnswer() {
@@ -174,7 +180,6 @@ protected:
   virtual string getPromptHint() {
     return "";
   }
-  virtual string getAnswer() = 0;
   virtual AnswerResult checkAnswer(string answer) = 0;
 };
 

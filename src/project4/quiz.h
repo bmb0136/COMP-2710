@@ -3,33 +3,33 @@
 
 #include "question.h"
 
-struct Node {
+struct _QuizNode {
 public:
-  Node(Question* q) {
+  _QuizNode(Question* q) {
     this->question = q;
   }
   Question* question = nullptr;
-  Node* next = nullptr;
+  _QuizNode* next = nullptr;
 };
 
 class Quiz {
 private:
-  Node* head = nullptr;
+  _QuizNode* head = nullptr;
   int count = 0;
 public:
   void add(Question* q) {
     if (count == 0) {
       count = 1;
-      head = new Node(q);
+      head = new _QuizNode(q);
       return;
     }
-    Node* current = head;
-    Node* prev = nullptr;
+    _QuizNode* current = head;
+    _QuizNode* prev = nullptr;
     while (current) {
       prev = current;
       current = current->next;
     }
-    prev->next = new Node(q);
+    prev->next = new _QuizNode(q);
     count++;
   }
   int size() {
@@ -41,7 +41,7 @@ public:
     }
 
     if (i == 0) {
-      Node* oldHead = head;
+      _QuizNode* oldHead = head;
       head = head->next;
       delete oldHead->question;
       delete oldHead;
@@ -49,8 +49,8 @@ public:
       return;
     }
 
-    Node* current = head;
-    Node* prev = nullptr;
+    _QuizNode* current = head;
+    _QuizNode* prev = nullptr;
 
     while (i > 0) {
       prev = current;
@@ -73,7 +73,7 @@ public:
       return;
     }
 
-    Node* current = head;
+    _QuizNode* current = head;
     while (i > 0) {
       current = current->next;
       i--;
@@ -86,7 +86,7 @@ public:
     if (i < 0 || i >= count) {
       return nullptr;
     }
-    Node* current = head;
+    _QuizNode* current = head;
     while (i > 0) {
       if (!current) {
         return nullptr;
@@ -97,7 +97,7 @@ public:
     return current ? current->question : nullptr;
   }
   float totalPoints() {
-    Node* current = head;
+    _QuizNode* current = head;
     float sum = 0.0f;
     while (current) {
       sum += current->question->getPoints();
