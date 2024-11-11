@@ -294,11 +294,28 @@ public:
     return "mcq";
   }
   bool editAnswer() override {
-    cout << "TODO" << endl;
-    return false;
+    string input;
+    while (true) {
+      cout << "Enter correct answer [A-" << (char)(numChoices + 'A' - 1) << "]: ";
+      getline(cin, input);
+
+      if (StringUtils::compareIgnoreCase(input, "quit()")) {
+        return false;
+      }
+
+      int choice = input.length() >= 1 ? input[0] : 0;
+      choice &= ~0b00100000;
+      choice -= 'A';
+      if (choice >= 0 && choice < numChoices) {
+        answerIndex = choice;
+        return true;
+      }
+
+      cout << "[Answer not recognized, please try again!]" << endl;
+    }
   }
   bool printExtraEditOption() override {
-    cout << "  4. Answer choices";
+    cout << "  4. Answer choices" << endl;
     cout << getSubprompt();
     return true;
   }
