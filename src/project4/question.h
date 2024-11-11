@@ -4,6 +4,7 @@
 #include "string_util.h"
 #include <cmath>
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 enum AnswerResult {
@@ -333,6 +334,11 @@ public:
     if (numChoices >= 5) {
       ss << "  E. " << e << endl;
     }
+    return ss.str();
+  }
+  string getPromptHint() override {
+    stringstream ss;
+    ss << " [A-" << (char)(numChoices + 'A' - 1) << "]";
     return ss.str();
   }
   string getType() override {
