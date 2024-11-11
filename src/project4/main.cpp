@@ -1,3 +1,11 @@
+// main.cpp
+// Author: Brandon Buckley (bmb0136)
+//
+// Build Instructions: See the README in https://github.com/bmb0136/COMP-2710
+//
+// Help Used:
+// None outside of stuff we learned in class and from previous projects
+
 #include "editor.h"
 #include "question.h"
 #include "quiz.h"
