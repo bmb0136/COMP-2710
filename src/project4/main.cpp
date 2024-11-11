@@ -52,7 +52,13 @@ void testQuestion() {
   assert(AR_CORRECT == tf.checkAnswer("true"));
   assert(AR_INCORRECT == tf.checkAnswer("f"));
   assert(AR_INCORRECT == tf.checkAnswer("false"));
-  assert(AR_INCORRECT == tf.checkAnswer("ur mom"));
+  assert(AR_INVALID == tf.checkAnswer("ur mom"));
+
+  cout << "Case 3: MCQ Question answer validation" << endl;
+  MCQQuestion mcq("prompt", 6.9f, 0, 2, "deez", "nuts", "", "", "");
+  assert(AR_CORRECT == mcq.checkAnswer("A"));
+  assert(AR_INCORRECT == mcq.checkAnswer("b"));
+  assert(AR_INVALID == mcq.checkAnswer("C"));
 }
 
 int main() {
