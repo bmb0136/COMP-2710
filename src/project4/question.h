@@ -2,7 +2,9 @@
 #define QUESTION_H
 
 #include "string_util.h"
+#include <cstdio>
 #include <iostream>
+#include <ostream>
 #include <sstream>
 #include <string>
 using namespace std;
@@ -67,8 +69,77 @@ public:
   virtual string getSubprompt() {
     return "";
   }
-  virtual Question* edit(int number) = 0;
+  Question* edit(int number, Question* (*factory)()) {
+    cout << "=== QUESTION " << number << " SAVED VALUES ===" << endl;
+    cout << "  1. Type*: " << getType() << endl;
+    cout << "  2. Question: " << prompt << endl;
+    cout << "  3. Answer: " << getAnswer() << endl;
+    bool hasExtra = printExtraEditOption();
+    cout << "* Editing question type will replace question" << endl;
+
+    while (true) {
+      string input;
+      int action;
+      while (true) {
+        cout << "Select a value to edit, or type quit(): ";
+        getline(cin, input);
+
+        if (StringUtils::compareIgnoreCase(input, "quit()")) {
+          return this;
+        }
+
+        if (StringUtils::tryParseInt(input, action, 1, hasExtra ? 4 : 3)) {
+          break;
+        }
+
+        cout << "[Option not recognized, please try again!]" << endl;
+      }
+
+      Question* replacement;
+      switch (action) {
+        case 1:
+          replacement = factory();
+          if (replacement) {
+            return replacement->edit(number, factory);
+          }
+          cout << "Question replacement aborted." << endl;
+          break;
+        case 2:
+          while (true) {
+            cout << "Enter new question: ";
+            getline(cin, input);
+            if (StringUtils::compareIgnoreCase(input, "quit()")) {
+              break;
+            }
+            if (input.length() > 0) {
+              prompt = input;
+              cout << "Question saved." << endl;
+              break;
+            }
+            cout << "[Please enter a question!]" << endl;
+          }
+          break;
+        case 3:
+          if (editAnswer()) {
+            cout << "Question saved." << endl;
+          }
+          break;
+        case 4:
+          if (hasExtra && editExtraAnswer()) {
+            cout << "Question saved." << endl;
+          }
+          break;
+      }
+    }
+  }
 protected:
+  virtual bool editAnswer() = 0;
+  virtual bool editExtraAnswer() {
+    return false;
+  }
+  virtual bool printExtraEditOption() {
+    return false;
+  }
   virtual string getPromptHint() {
     return "";
   }
@@ -96,6 +167,25 @@ public:
   string getPromptHint() override {
     return " [true/false]";
   }
+  string getType() override {
+    return "tf";
+  }
+  bool editAnswer() override {
+    string input;
+    while (true) {
+      cout << "Enter new answer [true/false]: ";
+      getline(cin, input);
+      if (StringUtils::compareIgnoreCase(input, "quit()")) {
+        return false;
+      }
+      bool newAns;
+      if (StringUtils::tryParseBool(input, newAns)) {
+        answer = newAns;
+        return true;
+      }
+      cout << "[Answer not recognized, please try again!]" << endl;
+    }
+  } 
 };
 
 class WRQuestion : public Question {
@@ -110,6 +200,24 @@ public:
   }
   AnswerResult checkAnswer(string answer) override {
     return StringUtils::compareIgnoreCase(answer, this->answer) ? AR_CORRECT : AR_INCORRECT;
+  }
+  string getType() override {
+    return "wr";
+  }
+  bool editAnswer() override {
+    string input;
+    while (true) {
+      cout << "Enter new answer: ";
+      getline(cin, input);
+      if (StringUtils::compareIgnoreCase(input, "quit()")) {
+        return false;
+      }
+      if (input.length() > 0) {
+        answer = input;
+        return true;
+      }
+      cout << "[Answer must not be empty!]" << endl;
+    }
   }
 };
 
@@ -181,6 +289,18 @@ public:
       ss << "  E. " << e << endl;
     }
     return ss.str();
+  }
+  string getType() override {
+    return "mcq";
+  }
+  bool editAnswer() override {
+    cout << "TODO" << endl;
+    return false;
+  }
+  bool printExtraEditOption() override {
+    cout << "  4. Answer choices";
+    cout << getSubprompt();
+    return true;
   }
 };
 

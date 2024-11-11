@@ -1,8 +1,8 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
-#include "question.h"
 #include "question_factory.h"
+#include "question.h"
 #include "quiz.h"
 #include "string_util.h"
 
@@ -83,9 +83,9 @@ private:
       return;
     }
 
-    Question* replacement = q->edit(number);
-    if (q != replacement) {
-      quiz.replaceAt(number - 1, q);
+    Question* replacement = q->edit(number, &QuestionFactory::create);
+    if (replacement && q != replacement) {
+      quiz.replaceAt(number - 1, replacement);
     }
   }
 public:
