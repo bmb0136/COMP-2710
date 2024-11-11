@@ -23,6 +23,7 @@ public:
     this->points = points;
   }
 public:
+  virtual ~Question() {}
   float getPoints() {
     return points;
   }

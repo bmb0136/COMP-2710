@@ -35,6 +35,39 @@ public:
   int size() {
     return count;
   }
+  void deleteAt(int i) {
+    if (i < 0 || i >= count) {
+      return;
+    }
+
+    if (i == 0) {
+      Node* oldHead = head;
+      head = head->next;
+      delete oldHead->question;
+      delete oldHead;
+      count--;
+      return;
+    }
+
+    Node* current = head;
+    Node* prev = nullptr;
+
+    while (i > 0) {
+      prev = current;
+      current = current->next;
+      i--;
+    }
+
+    if (!current) {
+      return;
+    }
+
+    prev->next = current->next;
+
+    delete current->question;
+    delete current;
+    count--;
+  }
   Question* get(int i) {
     if (i < 0 || i >= count) {
       return nullptr;
