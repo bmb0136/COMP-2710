@@ -1,6 +1,7 @@
 #ifndef EDITOR_H
 #define EDITOR_H
 
+#include "question_factory.h"
 #include "quiz.h"
 
 class QuizEditor {
@@ -42,12 +43,23 @@ public:
   static Quiz createQuiz() {
     Quiz quiz;
 
+    Question* newQuestion;
+
     while (true) {
       Action action = getAction();
       cout << endl;
 
       switch (action) {
         case CREATE:
+          cout << "=== QUESTION " << (quiz.size() + 1) << " ===" << endl;
+          newQuestion = QuestionFactory::create();
+
+          if (newQuestion) {
+            quiz.add(newQuestion);
+            cout << "Question saved." << endl;
+          }
+
+          cout << endl;
           break;
         case EDIT:
           break;
