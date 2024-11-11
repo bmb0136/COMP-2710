@@ -140,10 +140,15 @@ public:
           }
           return result;
         case 2:
-          if ((i + 1) < quiz.size()) {
-            i++;
-          } else {
+          if (result.isDone()) {
             cout << "[No next question available]" << endl;
+            break;
+          }
+          i++;
+          i %= quiz.size();
+          while (result.get(i)->answer) {
+            i %= quiz.size();
+            i++;
           }
           break;
         case 3:
