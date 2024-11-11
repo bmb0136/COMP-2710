@@ -57,6 +57,8 @@ public:
           if (newQuestion) {
             quiz.add(newQuestion);
             cout << "Question saved." << endl;
+          } else {
+            cout << "Question not saved." << endl;
           }
 
           cout << endl;
