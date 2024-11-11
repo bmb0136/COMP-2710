@@ -2,8 +2,10 @@
 #define QUESTION_H
 
 #include "string_util.h"
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstdlib>
 #include <iostream>
 #include <ostream>
 #include <sstream>
@@ -70,6 +72,7 @@ public:
   virtual string getSubprompt() {
     return "";
   }
+  virtual Question* copy() = 0;
   Question* edit(int number, Question* (*factory)()) {
     bool print = true;
     bool hasExtra;
@@ -182,6 +185,9 @@ public:
   TFQuestion(string prompt, bool answer, float points) : Question(prompt, points) {
     this->answer = answer;
   }
+  Question* copy() override {
+    return new TFQuestion(getPrompt(), answer, getPoints());
+  }
   AnswerResult checkAnswer(string answer) override {
     bool parsed;
     if (!StringUtils::tryParseBool(answer, parsed)) {
@@ -222,6 +228,9 @@ private:
 public:
   WRQuestion(string prompt, string answer, float points) : Question(prompt, points) {
     this->answer = answer;
+  }
+  Question* copy() override {
+    return new WRQuestion(getPrompt(), answer, getPoints());
   }
   string getAnswer() override {
     return this->answer;
@@ -271,6 +280,9 @@ public:
     }
     this->answerIndex = answerIndex;
     this->numChoices = numChoices;
+  }
+  Question* copy() override {
+    return new MCQQuestion(getPrompt(), getPoints(), answerIndex, numChoices, a, b, c, d, e);
   }
   string getAnswer() override {
     switch (answerIndex) {
