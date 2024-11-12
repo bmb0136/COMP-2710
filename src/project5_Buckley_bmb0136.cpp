@@ -128,7 +128,6 @@ int main(int argc, char *argv[])
   // #8#END# DO NOT MODIFY THIS COMMENT LINE!
   cout << "Banner id: " << banner_id << endl;
 #else
-  // TODO: remove this when submitting
 #endif
 
   pthread_t pro, con; 
