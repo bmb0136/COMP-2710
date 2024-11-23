@@ -4,7 +4,6 @@
 // Buckley
 // #0#END# DO NOT MODIFY THIS COMMENT LINE!
 
-#include <stdio.h>
 #include <pthread.h>
 #include <iostream>
 using namespace std;
